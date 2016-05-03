@@ -56,6 +56,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+        	<groupId>de.fh-muenster.team9</groupId>
+        	<artifactId>WarehouseService-shared</artifactId>
+        	<version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
