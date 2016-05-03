@@ -3,4 +3,11 @@
   <groupId>de.fh-muenster.team9</groupId>
   <artifactId>WarehouseService-shared</artifactId>
   <version>1.0.0</version>
+  <dependencies>
+  	<dependency>
+		<groupId>joda-time</groupId>
+		<artifactId>joda-time</artifactId>
+		<version>2.9.3</version>
+	</dependency>  	
+  </dependencies>
 </project>
