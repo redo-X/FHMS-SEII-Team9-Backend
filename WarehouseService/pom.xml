@@ -71,5 +71,7 @@
     <module>WarehouseService-ear</module>
     <module>WarehouseService-ejb</module>
     <module>WarehouseService-web</module>
+
+    
   </modules>
 </project>
