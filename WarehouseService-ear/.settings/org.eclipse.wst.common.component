@@ -8,7 +8,7 @@
         <dependent-module archiveName="WarehouseService-ejb-1.0.0.jar" deploy-path="/" handle="module:/resource/WarehouseService-ejb/WarehouseService-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="WarehouseService-shared-1.0.0.jar" deploy-path="/" handle="module:/resource/WarehouseService-shared/WarehouseService-shared">
+        <dependent-module archiveName="WarehouseService-shared-1.0.0.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/de/fh-muenster/team9/WarehouseService-shared/1.0.0/WarehouseService-shared-1.0.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="joda-time-2.9.3.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar">

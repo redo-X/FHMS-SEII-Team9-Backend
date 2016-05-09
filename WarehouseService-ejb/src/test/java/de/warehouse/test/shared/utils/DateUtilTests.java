@@ -1,4 +1,4 @@
-package de.warehouse.test.shared.util;
+package de.warehouse.test.shared.utils;
 
 import static org.junit.Assert.*;
 

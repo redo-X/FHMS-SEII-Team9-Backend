@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.warehouse.shared.util;
+package de.warehouse.shared.utils;
 
 import java.util.Date;
 
