@@ -1,6 +1,11 @@
 package de.warehouse.shared;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import de.warehouse.shared.util.DateUtil;
 
@@ -8,7 +13,10 @@ import de.warehouse.shared.util.DateUtil;
  * @author David
  *
  */
-public class Employee {
+@Entity
+public class Employee implements Serializable {
+	@Id
+	@GeneratedValue
 	private Integer code;
 	
 	private String firstName;
