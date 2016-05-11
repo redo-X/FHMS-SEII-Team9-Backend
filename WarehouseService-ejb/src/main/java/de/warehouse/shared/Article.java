@@ -3,22 +3,33 @@
  */
 package de.warehouse.shared;
 
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.Map;
+
+import javax.persistence.*;
 
 /**
  * @author David
  *
  */
-public class Article {
-
+@Entity
+public class Article implements Serializable{
+	@Id
 	private String code;
+	@Column(nullable=false)
 	private String name;
 	
+	@ManyToOne(cascade=CascadeType.ALL)
 	private StorageLocation storageLocation;
-
+	
+	@Column(nullable=false)
 	private Integer quantityOnStock;
+	@Column(nullable=false)
 	private Integer quantityOnCommitment;
 	
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="article")
+	private Map<Integer, CustomerOrderPosition> customerOrderPositions;
 
 	public Article() {
 		

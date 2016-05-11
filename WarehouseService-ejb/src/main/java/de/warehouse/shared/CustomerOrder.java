@@ -3,32 +3,44 @@
  */
 package de.warehouse.shared;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import de.warehouse.shared.util.DateUtil;
-
+import javax.persistence.*;
 /**
  * @author David
  *
  */
-public class CustomerOrder {
+@Entity
+public class CustomerOrder implements Serializable{
+	@Id
+	@GeneratedValue
 	private Integer code;
 	
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Customer customer;
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Employee picker;
 	
+	@Column(nullable=false)
 	private Date orderDate;
+	@Column(nullable=false)
 	private Date dueDate;
 	
-	private HashMap<Integer, CustomerOrderPosition> positions;
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="order")
+	@MapKey
+	private Map<Integer, CustomerOrderPosition> positions;
 	
+	@Column(nullable=false)
 	private double commissionProgress;
 	
 	private LocalDateTime startOfCommission;
 	private LocalDateTime finishOfCommission;
-	
+	@Column(nullable=false)
 	private boolean isEmailSent;
 	
 	

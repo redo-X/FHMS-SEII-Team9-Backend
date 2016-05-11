@@ -16,14 +16,12 @@ public class EmployeeRepository implements IEmployeeRepository {
 
 	@Override
 	public Employee GetByCode(Integer code) {
-		// TODO Auto-generated method stub
 		return this.em.find(Employee.class, code);
 	}
 
 	@Override
 	public Employee[] GetAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Employee[])this.em.createQuery("SELECT t FROM " + Employee.class.getSimpleName() + " t").getResultList().toArray();
 	}
 
 	@Override
@@ -34,14 +32,12 @@ public class EmployeeRepository implements IEmployeeRepository {
 
 	@Override
 	public Employee Update(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.em.merge(employee);
 	}
 
 	@Override
-	public Employee Remove(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+	public void Remove(Employee employee) {
+		this.em.remove(employee);
 	}
 
 	

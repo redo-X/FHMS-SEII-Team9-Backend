@@ -3,12 +3,23 @@
  */
 package de.warehouse.shared;
 
+import java.io.Serializable;
+import java.util.Map;
+
+import javax.persistence.*;
+
 /**
  * @author David
  *
  */
-public class StorageLocation {
+@Entity
+public class StorageLocation implements Serializable{
+	@Id
 	private String code;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="storageLocation")
+	@MapKey
+	private Map<Integer, Article> stockArticles;
 
 	/**
 	 * @param code

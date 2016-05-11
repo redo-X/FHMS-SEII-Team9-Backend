@@ -2,10 +2,9 @@ package de.warehouse.shared;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import de.warehouse.shared.util.DateUtil;
 
@@ -26,7 +25,14 @@ public class Employee implements Serializable {
 	
 	private Date dateOfBirth;
 	
+	@Column(nullable=false)
+	@Enumerated(EnumType.ORDINAL) 
 	private Role role;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdByEmployee")
+	private Map<Integer, CustomerOrderPositionMessage> createdCustomerOrderPositionMessages;
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="responsibleEmployee")
+	private Map<Integer, CustomerOrderPositionMessage> responsibleForCustomerOrderPositionMessages;
 	
 	
 	public Integer getAgeInYears() {

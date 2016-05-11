@@ -3,16 +3,30 @@
  */
 package de.warehouse.shared;
 
+import java.io.Serializable;
+import java.util.Map;
+
+import javax.persistence.*;
+
 /**
  * @author David
  *
  */
-public class Address {
-	private String zipCode;
-	private String city;
+@Entity
+public class Address implements Serializable{
 	
+	@Column(nullable=false, length=5)
+	private String zipCode;
+	@Column(nullable=false)
+	private String city;
+	@Column(nullable=false)
 	private String street;
+	@Column(nullable=false, length=4)
 	private String houseNumber;
+	
+	@Id
+	@OneToOne(optional=false)
+	private Customer customer;
 	
 	/**
 	 * Default Constructor
