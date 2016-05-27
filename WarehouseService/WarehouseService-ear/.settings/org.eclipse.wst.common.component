@@ -8,16 +8,13 @@
         <dependent-module archiveName="WarehouseService-ejb-1.0.0.jar" deploy-path="/" handle="module:/resource/WarehouseService-ejb/WarehouseService-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="WarehouseService-shared-1.0.0.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/de/fh-muenster/team9/WarehouseService-shared/1.0.0/WarehouseService-shared-1.0.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="joda-time-2.9.3.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="mail-1.4.7.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/javax/mail/mail/1.4.7/mail-1.4.7.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="activation-1.1.1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/javax/activation/activation/1.1.1/activation-1.1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="joda-time-2.9.3.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

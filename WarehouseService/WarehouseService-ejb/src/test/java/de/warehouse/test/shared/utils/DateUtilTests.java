@@ -8,7 +8,7 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.warehouse.shared.util.DateUtil;
+import de.warehouse.shared.utils.DateUtil;
 
 
 

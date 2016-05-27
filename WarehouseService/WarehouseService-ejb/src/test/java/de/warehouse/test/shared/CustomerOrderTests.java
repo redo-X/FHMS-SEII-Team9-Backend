@@ -7,7 +7,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import de.warehouse.shared.CustomerOrder;
-import de.warehouse.shared.util.DateUtil;
+import de.warehouse.shared.utils.DateUtil;
 
 public class CustomerOrderTests {
 	

@@ -55,11 +55,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-        	<groupId>de.fh-muenster.team9</groupId>
-        	<artifactId>WarehouseService-shared</artifactId>
-        	<version>1.0.0</version>
-        </dependency>
         
         <!-- http://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
@@ -67,6 +62,14 @@
 		    <artifactId>mail</artifactId>
 		    <version>1.4.7</version>
 		</dependency>
+		
+		<!-- http://mvnrepository.com/artifact/joda-time/joda-time -->
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <version>2.9.3</version>
+		</dependency>
+		
     </dependencies>
 
     <build>

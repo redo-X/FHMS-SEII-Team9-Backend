@@ -11,7 +11,7 @@ public class WarehouseSession {
 	private int id;
 	@ManyToOne
 	private Employee employee;
-	private final Date creationTime;
+	private Date creationTime;
 	
 	public WarehouseSession() {
 		this.creationTime = new Date();

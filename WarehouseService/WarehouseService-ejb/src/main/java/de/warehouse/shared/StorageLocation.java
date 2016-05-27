@@ -21,6 +21,9 @@ public class StorageLocation implements Serializable{
 	@MapKey
 	private Map<Integer, Article> stockArticles;
 
+	public StorageLocation() {
+		
+	}
 	/**
 	 * @param code
 	 */

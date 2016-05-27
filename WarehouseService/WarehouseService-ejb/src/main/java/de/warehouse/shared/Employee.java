@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.persistence.*;
 
-import de.warehouse.shared.util.DateUtil;
+import de.warehouse.shared.utils.DateUtil;
 
 /**
  * @author David

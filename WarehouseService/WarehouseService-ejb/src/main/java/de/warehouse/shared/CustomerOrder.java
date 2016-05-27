@@ -6,15 +6,11 @@ package de.warehouse.shared;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
-import de.warehouse.shared.util.DateUtil;
+import de.warehouse.shared.utils.DateUtil;
 import javax.persistence.*;
-/**
- * @author David
- *
- */
+
 /**
  * @author David
  *
