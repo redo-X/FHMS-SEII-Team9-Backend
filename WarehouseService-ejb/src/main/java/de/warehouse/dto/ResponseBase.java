@@ -1,15 +1,12 @@
 package de.warehouse.dto;
 
-import java.io.Serializable;
-
-public abstract class DtoBase implements Serializable {
+public abstract class ResponseBase extends DataTransferObjectBase {
 
 	private static final long serialVersionUID = 8861713728527618365L;
 	
-	// 0 => Alles OK
-	// < 0 => Fehler
-	// > 0 => Warnungen/Hinweise
-	private Integer resultCode;
+	public static final Integer OK_CODE = 0;
+	
+	private Integer resultCode = OK_CODE;
 	private String resultMessage;
 	/**
 	 * @return the resultCode

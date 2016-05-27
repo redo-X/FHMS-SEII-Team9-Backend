@@ -1,7 +1,7 @@
 package de.warehouse.dto;
 
 
-public class ArticleDto  extends DtoBase {
+public class ArticleTO  extends ResponseBase {
 
 	private static final long serialVersionUID = -4195469030405691860L;
 	
@@ -13,7 +13,23 @@ public class ArticleDto  extends DtoBase {
 	private String storageLocation;
 	
 	
-	
+	public ArticleTO() {
+		
+	}	
+	/**
+	 * @param code
+	 * @param name
+	 * @param quantityOnStock
+	 * @param storageLocation
+	 */
+	public ArticleTO(String code, String name, Integer quantityOnStock, String storageLocation) {
+		this.code = code;
+		this.name = name;
+		this.quantityOnStock = quantityOnStock;
+		this.storageLocation = storageLocation;
+	}
+
+
 
 	/**
 	 * @return the code

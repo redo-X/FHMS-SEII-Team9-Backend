@@ -38,4 +38,82 @@ public class CustomerOrderPosition implements Serializable {
 		
 		return Double.valueOf(pickedQuantity) / Double.valueOf(orderedQuantity);
 	}
+	public Integer getRemainingQuantity() {
+		return this.orderedQuantity - this.pickedQuantity;
+	}
+	/**
+	 * @return the customerOrderId
+	 */
+	public int getCustomerOrderId() {
+		return customerOrderId;
+	}
+	/**
+	 * @param customerOrderId the customerOrderId to set
+	 */
+	public void setCustomerOrderId(int customerOrderId) {
+		this.customerOrderId = customerOrderId;
+	}
+	/**
+	 * @return the order
+	 */
+	public CustomerOrder getOrder() {
+		return order;
+	}
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(CustomerOrder order) {
+		this.order = order;
+	}
+	/**
+	 * @return the article
+	 */
+	public Article getArticle() {
+		return article;
+	}
+	/**
+	 * @param article the article to set
+	 */
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+	/**
+	 * @return the orderedQuantity
+	 */
+	public Integer getOrderedQuantity() {
+		return orderedQuantity;
+	}
+	/**
+	 * @param orderedQuantity the orderedQuantity to set
+	 */
+	public void setOrderedQuantity(Integer orderedQuantity) {
+		this.orderedQuantity = orderedQuantity;
+	}
+	/**
+	 * @return the pickedQuantity
+	 */
+	public Integer getPickedQuantity() {
+		return pickedQuantity;
+	}
+	/**
+	 * @param pickedQuantity the pickedQuantity to set
+	 */
+	public void setPickedQuantity(Integer pickedQuantity) {
+		this.pickedQuantity = pickedQuantity;
+	}
+	/**
+	 * @return the dateOfCommission
+	 */
+	public LocalDateTime getDateOfCommission() {
+		return dateOfCommission;
+	}
+	/**
+	 * @param dateOfCommission the dateOfCommission to set
+	 */
+	public void setDateOfCommission(LocalDateTime dateOfCommission) {
+		this.dateOfCommission = dateOfCommission;
+	}
+	
+	
+	
 }

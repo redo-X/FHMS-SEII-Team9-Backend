@@ -1,6 +1,6 @@
 package de.warehouse.dto;
 
-public class CommissionPositionDto extends DtoBase {
+public class CommissionPositionTO extends ResponseBase {
 	
 	private static final long serialVersionUID = 939506005597148808L;
 
@@ -14,6 +14,30 @@ public class CommissionPositionDto extends DtoBase {
 	
 	private Integer quantityToCommit;
 	private Integer quantityOnStock;
+	
+	
+	public CommissionPositionTO() {
+		
+	}
+	/**
+	 * @param commissionPositionId
+	 * @param articleCode
+	 * @param articleName
+	 * @param storageLocation
+	 * @param quantityToCommit
+	 * @param quantityOnStock
+	 */
+	public CommissionPositionTO(Integer commissionPositionId, String articleCode, String articleName,
+			String storageLocation, Integer quantityToCommit, Integer quantityOnStock) {
+		this.commissionPositionId = commissionPositionId;
+		this.articleCode = articleCode;
+		this.articleName = articleName;
+		this.storageLocation = storageLocation;
+		this.quantityToCommit = quantityToCommit;
+		this.quantityOnStock = quantityOnStock;
+	}
+	
+	
 	/**
 	 * @return the commissionPositionId
 	 */

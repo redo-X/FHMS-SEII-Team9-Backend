@@ -18,12 +18,13 @@ public class Employee implements Serializable {
 	@GeneratedValue
 	private Integer code;
 	
+	private String password;
+	
 	private String firstName;
 	private String lastName;
 	
 	private String mailAddress; 
 	
-	private Date dateOfBirth;
 	
 	@Column(nullable=false)
 	@Enumerated(EnumType.ORDINAL) 
@@ -34,11 +35,10 @@ public class Employee implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="responsibleEmployee")
 	private Map<Integer, CustomerOrderPositionMessage> responsibleForCustomerOrderPositionMessages;
 	
-	
-	public Integer getAgeInYears() {
-		return DateUtil.getDiffYears(dateOfBirth);
-	}
 
+	public String getFullName() {
+		return String.format("%s %s", this.getFirstName(), this.getLastName());
+	}
 	
 	/**
 	 * @return the code
@@ -88,18 +88,21 @@ public class Employee implements Serializable {
 	public void setMailAddress(String mailAddress) {
 		this.mailAddress = mailAddress;
 	}
+	
 	/**
-	 * @return the dateOfBirth
+	 * @return the password
 	 */
-	public Date getDateOfBirth() {
-		return dateOfBirth;
+	public String getPassword() {
+		return password;
 	}
+
 	/**
-	 * @param dateOfBirth the dateOfBirth to set
+	 * @param password the password to set
 	 */
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public void setPassword(String password) {
+		this.password = password;
 	}
+
 	/**
 	 * @return the role
 	 */

@@ -1,6 +1,9 @@
-package de.warehouse.dto;
+package de.warehouse.dto.requests;
 
-public class UpdateQuantityOnCommissionPositionRequest extends DtoBase {
+import de.warehouse.dto.DataTransferObjectBase;
+import de.warehouse.dto.ResponseBase;
+
+public class UpdateQuantityOnCommissionPosition extends DataTransferObjectBase {
 
 	private static final long serialVersionUID = 1260836931671776938L;
 	

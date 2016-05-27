@@ -1,7 +1,8 @@
-package de.warehouse.dto;
+package de.warehouse.dto.requests;
 
+import de.warehouse.dto.DataTransferObjectBase;
 
-public class LoginRequestDto  extends DtoBase {
+public class LoginRequest  extends DataTransferObjectBase {
 
 	private static final long serialVersionUID = 2357803949211970026L;
 	

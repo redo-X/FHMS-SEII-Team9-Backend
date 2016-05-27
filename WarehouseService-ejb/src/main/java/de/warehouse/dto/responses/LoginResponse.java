@@ -1,6 +1,8 @@
-package de.warehouse.dto;
+package de.warehouse.dto.responses;
 
-public class LoginResponseDto extends DtoBase {
+import de.warehouse.dto.ResponseBase;
+
+public class LoginResponse extends ResponseBase {
 
 	private static final long serialVersionUID = -4360169674961128127L;
 	

@@ -13,7 +13,9 @@ import de.warehouse.shared.Employee;
 import de.warehouse.shared.Role;
 import de.warehouse.shared.WarehouseSession;
 import de.warehouse.shared.exceptions.AccessDeniedException;
+import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.SessionExpiredException;
+import de.warehouse.shared.exceptions.UsernamePasswordMismatchException;
 import de.warehouse.shared.interfaces.ISessionManagement;
 
 /**
@@ -27,10 +29,10 @@ public class SessionManagement implements ISessionManagement {
 	private EntityManager em;
 
 	@Override
-	public int createSession(Employee employee) {
+	public int createSession(Integer code, String password) throws EntityNotFoundException, UsernamePasswordMismatchException {
 		
 		// David: Any open session => remove it first
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		/*CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<WarehouseSession> cq = cb.createQuery(WarehouseSession.class);
 		Root<WarehouseSession> e = cq.from(WarehouseSession.class);
 		cq.where(cb.equal(e.get("employee"), employee));
@@ -38,9 +40,19 @@ public class SessionManagement implements ISessionManagement {
 		
 		for(WarehouseSession s : q.getResultList()) {
 			this.em.remove(s);
+		}*/
+		
+		Employee e = this.em.find(Employee.class, code);
+		
+		if(e == null) {
+			throw new EntityNotFoundException(code.toString() + " not found.");
+		}
+		
+		if(!e.getPassword().equals(password)) {
+			throw new UsernamePasswordMismatchException();
 		}
 	
-		WarehouseSession session = new WarehouseSession(employee);
+		WarehouseSession session = new WarehouseSession(e);
 		this.em.persist(session);
 		return session.getId();
 	}

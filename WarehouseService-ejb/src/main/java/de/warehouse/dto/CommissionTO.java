@@ -1,6 +1,6 @@
 package de.warehouse.dto;
 
-public class CommissionDto extends DtoBase {
+public class CommissionTO extends ResponseBase {
 
 	private static final long serialVersionUID = -6796983288704720189L;
 	
@@ -13,6 +13,28 @@ public class CommissionDto extends DtoBase {
 	
 	private Integer employeeCode;
 	private String employeeFullName;
+	
+	
+	public CommissionTO() {
+		
+	}	
+	/**
+	 * @param commissionId
+	 * @param positionCount
+	 * @param isRelatedToEmployee
+	 * @param progress
+	 * @param employeeCode
+	 * @param employeeFullName
+	 */
+	public CommissionTO(int commissionId, int positionCount, boolean isRelatedToEmployee, double progress,
+			Integer employeeCode, String employeeFullName) {
+		this.commissionId = commissionId;
+		this.positionCount = positionCount;
+		this.isRelatedToEmployee = isRelatedToEmployee;
+		this.progress = progress;
+		this.employeeCode = employeeCode;
+		this.employeeFullName = employeeFullName;
+	}
 	/**
 	 * @return the commissionId
 	 */
