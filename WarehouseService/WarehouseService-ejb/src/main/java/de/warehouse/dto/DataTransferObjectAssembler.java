@@ -42,7 +42,7 @@ public class DataTransferObjectAssembler implements IDataTransferObjectAssembler
 	@Override
 	public CommissionPositionTO mapEntity(CustomerOrderPosition customerOrderPosition) {
 		return new CommissionPositionTO(
-				customerOrderPosition.getCustomerOrderId(),
+				customerOrderPosition.getCustomerOrderPositionId(),
 				customerOrderPosition.getArticle().getCode(),
 				customerOrderPosition.getArticle().getName(),
 				customerOrderPosition.getArticle().getStorageLocation().getCode(),
