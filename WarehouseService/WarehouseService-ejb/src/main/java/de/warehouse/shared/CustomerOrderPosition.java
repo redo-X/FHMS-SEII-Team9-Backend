@@ -5,8 +5,16 @@ package de.warehouse.shared;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * @author David
@@ -15,16 +23,27 @@ import javax.persistence.*;
 @Entity
 public class CustomerOrderPosition implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2225969816208146650L;
+
 	@Id
 	@GeneratedValue
-	private int customerOrderId;
+	private int customerOrderPositionId;
 	
-	@ManyToOne
+	@ManyToOne(optional=false, fetch=FetchType.EAGER)
 	private CustomerOrder order;
-	@ManyToOne
+	
+	@ManyToOne(optional=false, fetch=FetchType.EAGER)
 	private Article article;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="position")
+	private Set<CustomerOrderPositionMessage> messages;
+	
 	@Column(nullable=false)
 	private Integer orderedQuantity;
+	
 	@Column(nullable=false)
 	private Integer pickedQuantity;
 	
@@ -41,17 +60,26 @@ public class CustomerOrderPosition implements Serializable {
 	public Integer getRemainingQuantity() {
 		return this.orderedQuantity - this.pickedQuantity;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CustomerOrderPosition [customerOrderPositionId=" + customerOrderPositionId + ", article=" + article
+				+ ", orderedQuantity=" + orderedQuantity + ", pickedQuantity=" + pickedQuantity + ", dateOfCommission="
+				+ dateOfCommission + "]";
+	}
 	/**
 	 * @return the customerOrderId
 	 */
-	public int getCustomerOrderId() {
-		return customerOrderId;
+	public int getCustomerOrderPositionId() {
+		return customerOrderPositionId;
 	}
 	/**
 	 * @param customerOrderId the customerOrderId to set
 	 */
-	public void setCustomerOrderId(int customerOrderId) {
-		this.customerOrderId = customerOrderId;
+	public void setCustomerOrderPositionId(int customerOrderId) {
+		this.customerOrderPositionId = customerOrderId;
 	}
 	/**
 	 * @return the order

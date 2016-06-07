@@ -4,9 +4,12 @@
 package de.warehouse.shared;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * @author David
@@ -14,12 +17,16 @@ import javax.persistence.*;
  */
 @Entity
 public class StorageLocation implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -235818876179343635L;
+
 	@Id
 	private String code;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="storageLocation")
-	@MapKey
-	private Map<Integer, Article> stockArticles;
+	private Set<Article> stockArticles;
 
 	public StorageLocation() {
 		
@@ -30,7 +37,16 @@ public class StorageLocation implements Serializable{
 	public StorageLocation(String code) {
 		this.code = code;
 	}
+	
+	
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StorageLocation [code=" + code + "]";
+	}
 	/**
 	 * @return the code
 	 */

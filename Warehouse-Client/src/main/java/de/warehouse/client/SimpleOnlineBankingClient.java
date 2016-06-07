@@ -1,13 +1,20 @@
 package de.warehouse.client;
 
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import de.warehouse.shared.CustomerOrder;
+import de.warehouse.shared.CustomerOrderPosition;
 import de.warehouse.shared.Employee;
 import de.warehouse.shared.Role;
 import de.warehouse.shared.exceptions.AccessDeniedException;
+import de.warehouse.shared.exceptions.CustomerOrderAlreadyAllocatedException;
 import de.warehouse.shared.exceptions.SessionExpiredException;
+import de.warehouse.shared.interfaces.ICommissionService;
 import de.warehouse.shared.interfaces.IEmployeeRepository;
+import de.warehouse.shared.interfaces.IMailService;
 import de.warehouse.shared.interfaces.ISessionManagement;
 
 /**
@@ -16,61 +23,59 @@ import de.warehouse.shared.interfaces.ISessionManagement;
  */
 public class SimpleOnlineBankingClient {
 
-	private static IEmployeeRepository remoteSystem;
-	private static ISessionManagement sessionRemoteSystem;
+	private static IEmployeeRepository employeeRepository;
+	private static ISessionManagement sessionManagement;
+	private static ICommissionService commissionService;
 
-	/**
-	 * In dieser Main-Methode werden Requests an den Onlinebanking-Server
-	 * abgeschickt. Sie koennen die durchgefuehrten Szenarien nach Belieben
-	 * anpassen.
-	 * 
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		try {
 
 			Context context = new InitialContext();
 
-			String lookupString = "WarehouseService-ear/WarehouseService-ejb-1.0.0/EmployeeRepository!de.warehouse.shared.interfaces.IEmployeeRepository";
-			String lookupStringSession = "/WarehouseService-ear/WarehouseService-ejb-1.0.0/SessionManagement!de.warehouse.shared.interfaces.ISessionManagement";
+			String employeeRepositoryLookupString = "/WarehouseService-ear/WarehouseService-ejb-1.0.0/EmployeeRepository!de.warehouse.shared.interfaces.IEmployeeRepository";
+			String sessionManagementLookupString = "/WarehouseService-ear/WarehouseService-ejb-1.0.0/SessionManagement!de.warehouse.shared.interfaces.ISessionManagement";
+			String commissionServiceLookupString = "/WarehouseService-ear/WarehouseService-ejb-1.0.0/CommissionService!de.warehouse.shared.interfaces.ICommissionService";
 
-			remoteSystem = (IEmployeeRepository) context.lookup(lookupString);
-			sessionRemoteSystem = (ISessionManagement) context.lookup(lookupStringSession);
+			employeeRepository = (IEmployeeRepository) context.lookup(employeeRepositoryLookupString);
+			sessionManagement = (ISessionManagement) context.lookup(sessionManagementLookupString);
+			commissionService = (ICommissionService) context.lookup(commissionServiceLookupString);
 
-			Employee e1 = remoteSystem.GetByCode(Integer.valueOf(1));
+			int sessionId = sessionManagement.createSession(1, "geheim");
 
-			if (e1 == null) {
-				e1 = new Employee();
-				e1.setFirstName("Max");
-				e1.setLastName("Mustermann");
-				e1.setRole(Role.Kommissionierer);
-
-				e1 = remoteSystem.Create(e1);
-			}
-			System.out.println(e1.getCode());
-
-			int sessionId = sessionRemoteSystem.createSession(e1);
 			try {
-				sessionRemoteSystem.closeSession(sessionId);
-				Employee[] emps = remoteSystem.GetAll(sessionId);
-				for (Employee e : emps) {
-					System.out.println(e.toString());
+				List<CustomerOrder> customerOrders = commissionService.getIncompletedCustomerOrders();
+				for (CustomerOrder c : customerOrders) {
+					System.out.println(c.toString());
 				}
-			} 
-			catch (SessionExpiredException see) 
-			{
-				System.out.println("Sitzung ist abgelaufebn");
-			} 
-			catch (AccessDeniedException ade) 
-			{
-				System.out.println("Keine Berechtigung");
-			} 
-			finally {
-				sessionRemoteSystem.closeSession(sessionId);
+				
+				CustomerOrder customerOrder = commissionService.getCustomerOrderById(4);
+				System.out.println(customerOrder.toString());
+				
+				commissionService.updateStart(customerOrder.getCode());				
+				try {					
+					commissionService.allocateCustomerOrder(customerOrder.getCode(), 1);
+				}catch(CustomerOrderAlreadyAllocatedException e) {
+					System.out.println(e.getMessage());
+				}
+				
+				List<CustomerOrderPosition> customerOrderPositions = commissionService.getPositionByCustomerOrderId(customerOrder.getCode());
+				for(CustomerOrderPosition p : customerOrderPositions) {
+					System.out.println(p.toString());
+					
+					commissionService.updatePickedQuantity(p.getCustomerOrderPositionId(), p.getRemainingQuantity());					
+				}				
+				commissionService.updateFinish(customerOrder.getCode());	
+				
+				customerOrders = commissionService.getIncompletedCustomerOrders();
+				for (CustomerOrder c : customerOrders) {
+					System.out.println(c.toString());
+				}
+			} finally {
+				sessionManagement.closeSession(sessionId);
 			}
 
 		} catch (Exception ex) {
-			
+
 			System.out.println(ex);
 		}
 	}

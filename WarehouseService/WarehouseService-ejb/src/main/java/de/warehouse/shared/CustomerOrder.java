@@ -8,8 +8,17 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
+
 import de.warehouse.shared.utils.DateUtil;
-import javax.persistence.*;
 
 /**
  * @author David
@@ -17,11 +26,16 @@ import javax.persistence.*;
  */
 @Entity
 public class CustomerOrder implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3808434973954797744L;
+
 	@Id
 	@GeneratedValue
 	private Integer code;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL, optional=false, fetch=FetchType.EAGER)
 	private Customer customer;
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Employee picker;
@@ -70,9 +84,20 @@ public class CustomerOrder implements Serializable{
 		
 		return progress / Double.valueOf(numberOfPositions);
 	}
-	
-	
-	
+	public void updateProgress() {
+		this.setCommissionProgress(getProgress());
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CustomerOrder [code=" + code + ", customer=" + customer + ", picker=" + picker + ", orderDate="
+				+ orderDate + ", dueDate=" + dueDate + ", commissionProgress=" + commissionProgress
+				+ ", startOfCommission=" + startOfCommission + ", finishOfCommission=" + finishOfCommission
+				+ ", isEmailSent=" + isEmailSent + "]";
+	}
+
 	/**
 	 * @return the code
 	 */

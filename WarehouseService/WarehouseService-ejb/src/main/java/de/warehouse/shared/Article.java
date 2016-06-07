@@ -4,9 +4,15 @@
 package de.warehouse.shared;
 
 import java.io.Serializable;
-import java.util.Map;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * @author David
@@ -14,12 +20,16 @@ import javax.persistence.*;
  */
 @Entity
 public class Article implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4503023308574864813L;
 	@Id
 	private String code;
 	@Column(nullable=false)
 	private String name;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private StorageLocation storageLocation;
 	
 	@Column(nullable=false)
@@ -29,7 +39,7 @@ public class Article implements Serializable{
 	
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="article")
-	private Map<Integer, CustomerOrderPosition> customerOrderPositions;
+	private Set<CustomerOrderPosition> customerOrderPositions;
 
 	public Article() {
 		
@@ -47,8 +57,14 @@ public class Article implements Serializable{
 	public Integer getFreeQuantity() {
 		return this.quantityOnStock - this.quantityOnCommitment;
 	}
-	
-
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Article [code=" + code + ", name=" + name + ", storageLocation=" + storageLocation
+				+ ", quantityOnStock=" + quantityOnStock + ", quantityOnCommitment=" + quantityOnCommitment + "]";
+	}
 	/**
 	 * @return the code
 	 */
@@ -116,7 +132,7 @@ public class Article implements Serializable{
 	 * @throws IllegalArgumentException If the commitment quantity is greater than the quantity on stock
 	 */
 	public void setQuantityOnCommitment(Integer quantityOnCommitment) throws IllegalArgumentException {
-		if (this.quantityOnCommitment > this.quantityOnStock) {
+		if (quantityOnCommitment > this.quantityOnStock) {
 			throw new IllegalArgumentException("The quantity to commit must be less or equals the quantity on stock.");
 		}
 		

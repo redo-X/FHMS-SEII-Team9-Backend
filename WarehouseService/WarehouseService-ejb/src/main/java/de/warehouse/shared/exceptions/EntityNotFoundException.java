@@ -4,18 +4,21 @@ import java.rmi.RemoteException;
 
 public class EntityNotFoundException extends RemoteException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6019238292907395549L;
+
 	public EntityNotFoundException() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public EntityNotFoundException(String s) {
 		super(s);
-		// TODO Auto-generated constructor stub
 	}
 
 	public EntityNotFoundException(String s, Throwable cause) {
 		super(s, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 }

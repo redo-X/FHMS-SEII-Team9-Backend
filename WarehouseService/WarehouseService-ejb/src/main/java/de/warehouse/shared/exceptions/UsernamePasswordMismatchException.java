@@ -4,18 +4,20 @@ import java.rmi.RemoteException;
 
 public class UsernamePasswordMismatchException extends RemoteException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4474583097066787062L;
+
 	public UsernamePasswordMismatchException() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public UsernamePasswordMismatchException(String s) {
 		super(s);
-		// TODO Auto-generated constructor stub
 	}
 
 	public UsernamePasswordMismatchException(String s, Throwable cause) {
 		super(s, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 }

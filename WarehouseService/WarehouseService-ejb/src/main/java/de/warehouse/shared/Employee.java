@@ -1,12 +1,16 @@
 package de.warehouse.shared;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Map;
+import java.util.Set;
 
-import javax.persistence.*;
-
-import de.warehouse.shared.utils.DateUtil;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * @author David
@@ -14,6 +18,11 @@ import de.warehouse.shared.utils.DateUtil;
  */
 @Entity
 public class Employee implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1731231651445561362L;
+
 	@Id
 	@GeneratedValue
 	private Integer code;
@@ -31,9 +40,10 @@ public class Employee implements Serializable {
 	private Role role;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdByEmployee")
-	private Map<Integer, CustomerOrderPositionMessage> createdCustomerOrderPositionMessages;
+	private Set<CustomerOrderPositionMessage> createdCustomerOrderPositionMessages;
+	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="responsibleEmployee")
-	private Map<Integer, CustomerOrderPositionMessage> responsibleForCustomerOrderPositionMessages;
+	private Set<CustomerOrderPositionMessage> responsibleForCustomerOrderPositionMessages;
 	
 
 	public String getFullName() {
