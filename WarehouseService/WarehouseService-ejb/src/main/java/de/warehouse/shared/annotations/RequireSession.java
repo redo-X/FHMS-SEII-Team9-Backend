@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import de.warehouse.shared.Role;
+import de.warehouse.persistence.Role;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })

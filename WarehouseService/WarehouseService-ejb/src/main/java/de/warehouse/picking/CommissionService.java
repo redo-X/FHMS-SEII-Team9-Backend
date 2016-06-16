@@ -1,6 +1,5 @@
 package de.warehouse.picking;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -8,21 +7,19 @@ import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
 
-import de.warehouse.shared.CustomerOrder;
-import de.warehouse.shared.CustomerOrderPosition;
-import de.warehouse.shared.Employee;
+import org.jboss.logging.Logger;
+
+import de.warehouse.dao.interfaces.ICommissionDAO;
+import de.warehouse.messaging.OutputRequesterBean;
+import de.warehouse.persistence.CustomerOrder;
+import de.warehouse.persistence.CustomerOrderPosition;
+import de.warehouse.shared.DocTypes;
 import de.warehouse.shared.exceptions.CustomerOrderAlreadyAllocatedException;
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyFinishedException;
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyStartedException;
+import de.warehouse.shared.exceptions.CustomerOrderMustBeAllocateToPicker;
+import de.warehouse.shared.exceptions.CustomerOrderNotCompletelyCommissioned;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 import de.warehouse.shared.interfaces.ICommissionService;
@@ -31,130 +28,125 @@ import de.warehouse.shared.interfaces.ISessionManagement;
 @Stateless
 @Remote(ICommissionService.class)
 public class CommissionService implements ICommissionService {
-	
-	@PersistenceContext
-	private EntityManager em;
+
+	private static final Logger logger = Logger.getLogger(CommissionService.class);
 
 	@EJB
 	private ISessionManagement sessionManagementBean;
 
-	/* (non-Javadoc)
-	 * @see de.warehouse.shared.interfaces.ICommissionService#getIncompletedCustomerOrders()
+	@EJB
+	private ICommissionDAO commissionDAO;
+
+	@EJB
+	private OutputRequesterBean requesterBean;
+
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#getPendingCustomerOrdersWithoutPicker()
 	 */
 	@Override
 	@Lock(LockType.READ)
-	public List<CustomerOrder> getIncompletedCustomerOrders() {
-        return this.em.createQuery("SELECT e FROM CustomerOrder e WHERE e.commissionProgress < 1", CustomerOrder.class).getResultList();
+	public List<CustomerOrder> getPendingCustomerOrdersWithoutPicker() {
+		return this.commissionDAO.getPendingCustomerOrdersWithoutPicker();
 	}
-
-	/* (non-Javadoc)
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#getPendingCustomerOrdersByPickerId(int)
+	 */
+	@Override
+	@Lock(LockType.READ)
+	public List<CustomerOrder> getPendingCustomerOrdersByPickerId(int pickerId) {
+		return this.commissionDAO.getPendingCustomerOrdersByEmployeeId(pickerId);
+	}
+	/**
 	 * @see de.warehouse.shared.interfaces.ICommissionService#getCustomerOrderById(int)
 	 */
 	@Override
 	@Lock(LockType.READ)
 	public CustomerOrder getCustomerOrderById(int customerOrderId) {
-		return this.em.find(CustomerOrder.class, customerOrderId);
+		return this.commissionDAO.getCustomerOrderById(customerOrderId);
 	}
-
-	/* (non-Javadoc)
-	 * @see de.warehouse.shared.interfaces.ICommissionService#getPositionByCustomerOrderId(int)
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#getPositionsByCustomerOrderId(int)
 	 */
 	@Override
 	@Lock(LockType.READ)
-	public List<CustomerOrderPosition> getPositionByCustomerOrderId(int customerOrderId) {
-		Query q = this.em.createQuery("SELECT e FROM CustomerOrderPosition e WHERE e.order = :customerOrder", CustomerOrderPosition.class);
-		
-		q.setParameter("customerOrder", this.em.find(CustomerOrder.class, customerOrderId));
-		
-		return q.getResultList();
+	public List<CustomerOrderPosition> getPositionsByCustomerOrderId(int customerOrderId) {
+		return this.commissionDAO.getPositionsByCustomerOrderId(customerOrderId);
 	}
-	/* (non-Javadoc)
-	 * @see de.warehouse.shared.interfaces.ICommissionService#getPendingPositionByCustomerOrderId(int)
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#getPendingPositionsByCustomerOrderId(int)
 	 */
 	@Override
-	public List<CustomerOrderPosition> getPendingPositionByCustomerOrderId(int customerOrderId) {
-		Query q = this.em.createQuery("SELECT e FROM CustomerOrderPosition e WHERE e.order = :customerOrder AND e.pickedQuantity < e.orderedQuantity", CustomerOrderPosition.class);
-		
-		q.setParameter("customerOrder", this.em.find(CustomerOrder.class, customerOrderId));
-		
-		return q.getResultList();
+	public List<CustomerOrderPosition> getPendingPositionsByCustomerOrderId(int customerOrderId) {
+		return this.commissionDAO.getPendingPositionsByCustomerOrderId(customerOrderId);
 	}
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#allocateCustomerOrder(int, int)
+	 */
+	@Override
+	@Lock(LockType.WRITE)
+	public void allocateCustomerOrder(int customerOrderId, int employeeId)
+			throws CustomerOrderAlreadyAllocatedException {
+		this.commissionDAO.allocateCustomerOrder(customerOrderId, employeeId);
+		
+		CustomerOrder order = this.commissionDAO.getCustomerOrderWithPickerById(customerOrderId);
 
-	/* (non-Javadoc)
-	 * @see de.warehouse.shared.interfaces.ICommissionService#AllocateCustomerOrder(int, int)
-	 */
-	@Override
-	@Lock(LockType.WRITE)
-	public void allocateCustomerOrder(int customerOrderId, int employeeId) throws CustomerOrderAlreadyAllocatedException {
-		CustomerOrder c = this.em.find(CustomerOrder.class, customerOrderId);
-		
-		if (c.getPicker() != null) {
-			throw new CustomerOrderAlreadyAllocatedException("CustomerOrder has already a picker.");
-		}
-		
-		Employee e = this.em.find(Employee.class, employeeId);
-		c.setPicker(e);
-		this.em.merge(c);
-	}
+		String recipient = order.getPicker().getMailAddress();
+		String subject = "INFO: Kommissionen";
+		String body = String.format("Commission %d was allocated to you.", order.getCode());
 
-	/* (non-Javadoc)
-	 * @see de.warehouse.shared.interfaces.ICommissionService#UpdatePickedQuantity(int, int)
+		this.requesterBean.sendInfo(DocTypes.CommissionInfo.name(), recipient, subject, body);
+	}
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#updatePickedQuantity(int, int)
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public void updatePickedQuantity(int customerOrderPositionId, int pickedQuantity) throws NegativeQuantityException, PickedQuantityTooHighException {
-		if(pickedQuantity < 0) {
-			// Quantity must not be negative
-			throw new NegativeQuantityException("Picked quantity must not be negative.");
-		}
-		
-		CustomerOrderPosition pos = this.em.find(CustomerOrderPosition.class, customerOrderPositionId);
-		
-		if(pickedQuantity > pos.getRemainingQuantity()){
-			// Entered quantity is too high
-			throw new PickedQuantityTooHighException("Picked quantity must be less or equals the ordered quantity.");
-			
-		}
-		
-		// Adds the newly picked quantity to the actual quantity
-		pos.setPickedQuantity(pos.getPickedQuantity() + pickedQuantity);		
-		pos.setDateOfCommission(LocalDateTime.now());
-		
-		pos.getOrder().updateProgress();
-		
-		this.em.merge(pos);
+	public void updatePickedQuantity(int customerOrderPositionId, int pickedQuantity)
+			throws NegativeQuantityException, PickedQuantityTooHighException, CustomerOrderMustBeAllocateToPicker {
+		this.commissionDAO.updatePickedQuantity(customerOrderPositionId, pickedQuantity);
 	}
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#updateStart(int)
+	 */
+	@Override
+	@Lock(LockType.WRITE)
+	public void updateStart(int customerOrderId)
+			throws CustomerOrderCommissionAlreadyStartedException, CustomerOrderMustBeAllocateToPicker {
+		this.commissionDAO.updateStart(customerOrderId);
 
-	/* (non-Javadoc)
-	 * @see de.warehouse.shared.interfaces.ICommissionService#UpdateStart(int)
-	 */
-	@Override
-	@Lock(LockType.WRITE)
-	public void updateStart(int customerOrderId) throws CustomerOrderCommissionAlreadyStartedException {
-		CustomerOrder c = this.em.find(CustomerOrder.class, customerOrderId);
-		
-		if(c.getStartOfCommission() != null) {
-			// Already started
-			throw new CustomerOrderCommissionAlreadyStartedException("CustomerOrder was already started!");
-		}
-		
-		c.setStartOfCommission(LocalDateTime.now());	
-		this.em.merge(c);
+		CustomerOrder order = this.commissionDAO.getCustomerOrderWithPickerById(customerOrderId);
+
+		String recipient = order.getPicker().getMailAddress();
+		String subject = "INFO: Kommissionen";
+		String body = String.format("Commission %d started at %s by %s.", order.getCode(),
+				order.getStartOfCommission().toString(), order.getPicker().getFullName());
+
+		this.requesterBean.sendInfo(DocTypes.CommissionInfo.name(), recipient, subject, body);
 	}
-	/* (non-Javadoc)
-	 * @see de.warehouse.shared.interfaces.ICommissionService#UpdateFinish(int)
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#updateFinish(int)
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public void updateFinish(int customerOrderId) throws CustomerOrderCommissionAlreadyFinishedException {
-		CustomerOrder c = this.em.find(CustomerOrder.class, customerOrderId);
+	public void updateFinish(int customerOrderId)
+			throws CustomerOrderCommissionAlreadyFinishedException, CustomerOrderMustBeAllocateToPicker, CustomerOrderNotCompletelyCommissioned {
+		this.commissionDAO.updateFinish(customerOrderId);
 		
-		if(c.getFinishOfCommission() != null) {
-			// Already started
-			throw new CustomerOrderCommissionAlreadyFinishedException("CustomerOrder was already finished!");
-		}
-		
-		c.setFinishOfCommission(LocalDateTime.now());	
-		this.em.merge(c);
+		CustomerOrder order = this.commissionDAO.getCustomerOrderWithPickerById(customerOrderId);
+
+		String recipient = order.getPicker().getMailAddress();
+		String subject = "INFO: Kommissionen";
+		String body = String.format("Commission %d finished at %s by %s.", order.getCode(),
+				order.getFinishOfCommission().toString(), order.getPicker().getFullName());
+
+		this.requesterBean.sendInfo(DocTypes.CommissionInfo.name(), recipient, subject, body);
+	}
+	/**
+	 * @see de.warehouse.shared.interfaces.ICommissionService#updateCommissionProgress(int)
+	 */
+	@Override
+	@Lock(LockType.WRITE)
+	public void updateCommissionProgress(int customerOrderId) {
+		this.commissionDAO.updateCommissionProgress(customerOrderId);
 	}
 }

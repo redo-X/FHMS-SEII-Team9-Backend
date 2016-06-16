@@ -3,10 +3,10 @@ package de.warehouse.dto;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
-import de.warehouse.shared.Article;
-import de.warehouse.shared.CustomerOrder;
-import de.warehouse.shared.CustomerOrderPosition;
-import de.warehouse.shared.Employee;
+import de.warehouse.persistence.Article;
+import de.warehouse.persistence.CustomerOrder;
+import de.warehouse.persistence.CustomerOrderPosition;
+import de.warehouse.persistence.Employee;
 
 /**
  * This stateless session bean provides mapping methods to translate
@@ -33,10 +33,23 @@ public class DataTransferObjectAssembler implements IDataTransferObjectAssembler
 		return new CommissionTO(
 				customerOrder.getCode(),
 				customerOrder.getPositions().size(),
+				(int)(customerOrder.getOrderDate().getTime() / 1000),
+				(int)(customerOrder.getDueDate().getTime() / 1000),
 				picker != null,
 				customerOrder.getProgress(),
 				picker == null ? -1 : picker.getCode(),
 				picker == null ? "" : picker.getFullName());
+	}
+
+	@Override
+	public CommissionTO[] mapEntities(CustomerOrder[] customerOrders) {
+		CommissionTO[] result = new CommissionTO[customerOrders.length];
+		
+		for(int i = 0; i < customerOrders.length;i++) {
+			result[i] = this.mapEntity(customerOrders[i]);
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -49,7 +62,15 @@ public class DataTransferObjectAssembler implements IDataTransferObjectAssembler
 				customerOrderPosition.getRemainingQuantity(),
 				customerOrderPosition.getArticle().getQuantityOnStock());
 	}
-
+	@Override
+	public CommissionPositionTO[] mapEntities(CustomerOrderPosition[] customerOrderPositions) {
+		CommissionPositionTO[] result = new CommissionPositionTO[customerOrderPositions.length];
+		
+		for(int i = 0; i < customerOrderPositions.length;i++) {
+			result[i] = this.mapEntity(customerOrderPositions[i]);
+		}
+		
+		return result;
+	}
 	
-
 }

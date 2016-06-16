@@ -1,17 +1,13 @@
 package de.warehouse.session;
 
+import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Singleton;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
-import de.warehouse.shared.Employee;
-import de.warehouse.shared.Role;
-import de.warehouse.shared.WarehouseSession;
+import de.warehouse.dao.interfaces.IWarehouseSessionDAO;
+import de.warehouse.persistence.Employee;
+import de.warehouse.persistence.Role;
+import de.warehouse.persistence.WarehouseSession;
 import de.warehouse.shared.exceptions.AccessDeniedException;
 import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.SessionExpiredException;
@@ -25,41 +21,17 @@ import de.warehouse.shared.interfaces.ISessionManagement;
 @Remote(ISessionManagement.class)
 public class SessionManagement implements ISessionManagement {
 
-	@PersistenceContext
-	private EntityManager em;
+	@EJB
+	private IWarehouseSessionDAO warehouseSessionDAO;
 
 	@Override
 	public int createSession(Integer code, String password) throws EntityNotFoundException, UsernamePasswordMismatchException {
-		
-		// David: Any open session => remove it first
-		/*CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<WarehouseSession> cq = cb.createQuery(WarehouseSession.class);
-		Root<WarehouseSession> e = cq.from(WarehouseSession.class);
-		cq.where(cb.equal(e.get("employee"), employee));
-		TypedQuery<WarehouseSession> q = em.createQuery(cq);
-		
-		for(WarehouseSession s : q.getResultList()) {
-			this.em.remove(s);
-		}*/
-		
-		Employee e = this.em.find(Employee.class, code);
-		
-		if(e == null) {
-			throw new EntityNotFoundException(code.toString() + " not found.");
-		}
-		
-		if(!e.getPassword().equals(password)) {
-			throw new UsernamePasswordMismatchException();
-		}
-	
-		WarehouseSession session = new WarehouseSession(e);
-		this.em.persist(session);
-		return session.getId();
+		return this.warehouseSessionDAO.create(code, password);
 	}
 
 	@Override
 	public WarehouseSession getById(int warehouseSessionId) {
-		return this.em.find(WarehouseSession.class, warehouseSessionId);
+		return this.warehouseSessionDAO.findById(warehouseSessionId);
 	}
 
 	@Override
@@ -87,10 +59,6 @@ public class SessionManagement implements ISessionManagement {
 
 	@Override
 	public void closeSession(int warehouseSessionId) {
-		WarehouseSession session = this.getById(warehouseSessionId);
-
-		if (session != null) {
-			this.em.remove(session);
-		}
+		this.warehouseSessionDAO.delete(warehouseSessionId);
 	}
 }

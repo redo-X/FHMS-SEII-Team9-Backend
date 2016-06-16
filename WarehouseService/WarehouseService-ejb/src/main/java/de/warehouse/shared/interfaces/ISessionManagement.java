@@ -1,7 +1,7 @@
 package de.warehouse.shared.interfaces;
 
-import de.warehouse.shared.Role;
-import de.warehouse.shared.WarehouseSession;
+import de.warehouse.persistence.Role;
+import de.warehouse.persistence.WarehouseSession;
 import de.warehouse.shared.exceptions.AccessDeniedException;
 import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.SessionExpiredException;

@@ -1,16 +1,18 @@
 package de.warehouse.shared.interfaces;
 
-import de.warehouse.shared.Employee;
+import java.util.List;
+
+import de.warehouse.persistence.Employee;
 import de.warehouse.shared.exceptions.AccessDeniedException;
 import de.warehouse.shared.exceptions.SessionExpiredException;
 
 public interface IEmployeeRepository {
-	public Employee GetByCode(Integer code);
+	public Employee findById(Integer code);
 	
-	public Employee[] GetAll(int sessionId) throws SessionExpiredException, AccessDeniedException;
+	public List<Employee> getAll(int sessionId) throws SessionExpiredException, AccessDeniedException;
 	
-	public Employee Create(Employee employee);
-	public Employee Update(Employee employee);
+	public Employee create(Employee employee);
+	public Employee update(Employee employee);
 	
-	public void Remove(Employee employee);
+	public void delete(Employee employee);
 }

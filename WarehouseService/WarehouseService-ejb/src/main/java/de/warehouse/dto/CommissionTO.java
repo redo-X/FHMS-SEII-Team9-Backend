@@ -6,6 +6,9 @@ public class CommissionTO extends ResponseBase {
 	
 	private int commissionId;
 	private int positionCount;
+
+	private int orderDateAsUnixTimestamp;
+	private int dueDateAsUnixTimestamp;
 	
 	private boolean isRelatedToEmployee;
 
@@ -18,23 +21,29 @@ public class CommissionTO extends ResponseBase {
 	public CommissionTO() {
 		
 	}	
+	
 	/**
 	 * @param commissionId
 	 * @param positionCount
+	 * @param orderDateAsUnixTimestamp
+	 * @param dueDateAsUnixTimestamp
 	 * @param isRelatedToEmployee
 	 * @param progress
 	 * @param employeeCode
 	 * @param employeeFullName
 	 */
-	public CommissionTO(int commissionId, int positionCount, boolean isRelatedToEmployee, double progress,
-			Integer employeeCode, String employeeFullName) {
+	public CommissionTO(int commissionId, int positionCount, int orderDateAsUnixTimestamp, int dueDateAsUnixTimestamp,
+			boolean isRelatedToEmployee, double progress, Integer employeeCode, String employeeFullName) {
 		this.commissionId = commissionId;
 		this.positionCount = positionCount;
+		this.orderDateAsUnixTimestamp = orderDateAsUnixTimestamp;
+		this.dueDateAsUnixTimestamp = dueDateAsUnixTimestamp;
 		this.isRelatedToEmployee = isRelatedToEmployee;
 		this.progress = progress;
 		this.employeeCode = employeeCode;
 		this.employeeFullName = employeeFullName;
 	}
+
 	/**
 	 * @return the commissionId
 	 */
@@ -59,6 +68,34 @@ public class CommissionTO extends ResponseBase {
 	public void setPositionCount(int positionCount) {
 		this.positionCount = positionCount;
 	}
+	/**
+	 * @return the orderDateAsUnixTimestamp
+	 */
+	public int getOrderDateAsUnixTimestamp() {
+		return orderDateAsUnixTimestamp;
+	}
+
+	/**
+	 * @param orderDateAsUnixTimestamp the orderDateAsUnixTimestamp to set
+	 */
+	public void setOrderDateAsUnixTimestamp(int orderDateAsUnixTimestamp) {
+		this.orderDateAsUnixTimestamp = orderDateAsUnixTimestamp;
+	}
+
+	/**
+	 * @return the dueDateAsUnixTimestamp
+	 */
+	public int getDueDateAsUnixTimestamp() {
+		return dueDateAsUnixTimestamp;
+	}
+
+	/**
+	 * @param dueDateAsUnixTimestamp the dueDateAsUnixTimestamp to set
+	 */
+	public void setDueDateAsUnixTimestamp(int dueDateAsUnixTimestamp) {
+		this.dueDateAsUnixTimestamp = dueDateAsUnixTimestamp;
+	}
+
 	/**
 	 * @return the isRelatedToEmployee
 	 */
