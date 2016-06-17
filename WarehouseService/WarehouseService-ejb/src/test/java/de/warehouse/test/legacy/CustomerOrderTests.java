@@ -13,6 +13,10 @@ import de.warehouse.persistence.CustomerOrderPosition;
 import de.warehouse.persistence.Employee;
 import de.warehouse.shared.utils.DateUtil;
 
+/**
+ * @author David
+ *
+ */
 public class CustomerOrderTests {
 
 	// CustomerOrder with two positions and 10 ordered quantity

@@ -6,6 +6,10 @@ import org.junit.Test;
 
 import de.warehouse.persistence.Article;
 
+/**
+ * @author Florian
+ *
+ */
 public class ArticleTest {
 	
 	@Test(expected=IllegalArgumentException.class)

@@ -13,6 +13,10 @@ import de.warehouse.shared.exceptions.CustomerOrderMustBeAllocateToPicker;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 
+/**
+ * @author Florian
+ *
+ */
 public class CustomerOrderPositionTests {
 
 	private CustomerOrderPosition position1;
