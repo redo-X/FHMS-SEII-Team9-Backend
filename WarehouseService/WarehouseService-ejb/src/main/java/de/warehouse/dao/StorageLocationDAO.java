@@ -13,6 +13,7 @@ import de.warehouse.persistence.StorageLocation;
 import de.warehouse.shared.exceptions.EntityWithIdentifierAlreadyExistsException;
 
 /**
+ * @author Florian
  * @see de.warehouse.dao.interfaces.IStorageLocationDAO
  */
 @Stateless

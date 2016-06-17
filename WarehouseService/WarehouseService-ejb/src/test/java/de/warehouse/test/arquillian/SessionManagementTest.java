@@ -18,6 +18,9 @@ import de.warehouse.shared.exceptions.UsernamePasswordMismatchException;
 import de.warehouse.shared.interfaces.ISessionManagement;
 import de.warehouse.test.ArquillianTestBase;
 
+/**
+ * @author David, Florian
+ */
 @RunWith(Arquillian.class)
 public class SessionManagementTest extends ArquillianTestBase {
 	@EJB

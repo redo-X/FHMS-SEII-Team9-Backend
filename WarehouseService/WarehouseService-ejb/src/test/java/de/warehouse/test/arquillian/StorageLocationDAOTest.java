@@ -17,6 +17,9 @@ import de.warehouse.persistence.StorageLocation;
 import de.warehouse.shared.exceptions.EntityWithIdentifierAlreadyExistsException;
 import de.warehouse.test.ArquillianTestWithSessionsBase;
 
+/**
+ * @author Florian
+ */
 @RunWith(Arquillian.class)
 public class StorageLocationDAOTest extends ArquillianTestWithSessionsBase {
 

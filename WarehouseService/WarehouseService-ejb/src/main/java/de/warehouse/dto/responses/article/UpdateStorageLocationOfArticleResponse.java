@@ -4,6 +4,9 @@ import javax.xml.bind.annotation.XmlType;
 
 import de.warehouse.dto.ResponseBase;
 
+/**
+ * @author Florian
+ */
 @XmlType(name="UpdateStorageLocationOfArticleResponse")
 public class UpdateStorageLocationOfArticleResponse extends ResponseBase {
 

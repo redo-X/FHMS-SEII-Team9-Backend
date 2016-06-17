@@ -5,6 +5,9 @@ import javax.xml.bind.annotation.XmlType;
 import de.warehouse.dto.ArticleTO;
 import de.warehouse.dto.ResponseBase;
 
+/**
+ * @author Florian
+ */
 @XmlType(name="GetArticlesResponse")
 public class GetArticlesResponse extends ResponseBase {
 

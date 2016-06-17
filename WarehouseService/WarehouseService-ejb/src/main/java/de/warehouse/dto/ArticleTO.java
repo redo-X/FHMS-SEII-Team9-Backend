@@ -1,6 +1,8 @@
 package de.warehouse.dto;
 
-
+/**
+ * @author David, Florian, Thomas, Marco
+ */
 public class ArticleTO  extends ResponseBase {
 
 	private static final long serialVersionUID = -4195469030405691860L;

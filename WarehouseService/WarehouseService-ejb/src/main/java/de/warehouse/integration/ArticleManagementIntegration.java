@@ -16,6 +16,9 @@ import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.SessionExpiredException;
 import de.warehouse.shared.interfaces.IArticleRepository;
 
+/**
+ * @author Florian
+ */
 @WebService
 @Stateless
 public class ArticleManagementIntegration {

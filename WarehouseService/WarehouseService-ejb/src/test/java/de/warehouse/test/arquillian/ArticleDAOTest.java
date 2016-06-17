@@ -18,6 +18,9 @@ import de.warehouse.persistence.Article;
 import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.test.ArquillianTestWithSessionsBase;
 
+/**
+ * @author Florian
+ */
 @RunWith(Arquillian.class)
 public class ArticleDAOTest extends ArquillianTestWithSessionsBase {
 

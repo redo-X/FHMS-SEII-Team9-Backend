@@ -5,6 +5,9 @@ import javax.xml.bind.annotation.XmlType;
 import de.warehouse.dto.CommissionTO;
 import de.warehouse.dto.ResponseBase;
 
+/**
+ * @author David
+ */
 @XmlType(name="GetCommissionsResponse")
 public class GetCommissionsResponse extends ResponseBase {
 

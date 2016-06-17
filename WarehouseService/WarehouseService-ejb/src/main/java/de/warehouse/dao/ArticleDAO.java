@@ -15,6 +15,7 @@ import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.EntityWithIdentifierAlreadyExistsException;
 
 /**
+ * @author Florian
  * @see de.warehouse.dao.interfaces.IArticleDAO
  */
 @Stateless

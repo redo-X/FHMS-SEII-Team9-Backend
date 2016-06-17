@@ -4,6 +4,9 @@ import javax.xml.bind.annotation.XmlType;
 
 import de.warehouse.dto.ResponseBase;
 
+/**
+ * @author David
+ */
 @XmlType(name="UpdatePickedQuantityResponse")
 public class UpdatePickedQuantityResponse extends ResponseBase {
 

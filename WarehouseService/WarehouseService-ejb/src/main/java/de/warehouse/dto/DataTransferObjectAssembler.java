@@ -11,7 +11,7 @@ import de.warehouse.persistence.Employee;
 /**
  * This stateless session bean provides mapping methods to translate
  * between entities and data transfer objects.
- * @author David
+ * @author David, Florian, Thomas, Marco
  */
 @Stateless
 @Local(IDataTransferObjectAssembler.class)

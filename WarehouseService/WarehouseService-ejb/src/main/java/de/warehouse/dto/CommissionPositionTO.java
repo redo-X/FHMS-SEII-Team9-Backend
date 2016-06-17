@@ -1,5 +1,8 @@
 package de.warehouse.dto;
 
+/**
+ * @author David, Florian, Thomas, Marco
+ */
 public class CommissionPositionTO extends ResponseBase {
 	
 	private static final long serialVersionUID = 939506005597148808L;
