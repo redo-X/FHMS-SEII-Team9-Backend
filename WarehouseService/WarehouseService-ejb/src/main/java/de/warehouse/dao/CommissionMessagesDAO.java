@@ -22,7 +22,6 @@ import de.warehouse.persistence.CustomerOrderPosition;
 import de.warehouse.persistence.CustomerOrderPositionMessage;
 import de.warehouse.persistence.Employee;
 import de.warehouse.persistence.WarehouseSession;
-import de.warehouse.picking.CommissionService;
 
 @Stateless
 public class CommissionMessagesDAO implements ICommissionMessagesDAO {

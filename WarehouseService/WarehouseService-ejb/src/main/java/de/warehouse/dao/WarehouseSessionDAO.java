@@ -53,7 +53,7 @@ public class WarehouseSessionDAO implements IWarehouseSessionDAO {
 		if(!e.getPassword().equals(password)) {
 			logger.error("Invalid login");
 			
-			throw new UsernamePasswordMismatchException();
+			throw new UsernamePasswordMismatchException("Username/Password does not match.");
 		}
 	
 		WarehouseSession session = new WarehouseSession(e);
