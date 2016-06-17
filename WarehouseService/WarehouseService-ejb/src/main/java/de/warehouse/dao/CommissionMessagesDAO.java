@@ -98,7 +98,7 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void create(CustomerOrderPositionMessage e) {
-		logger.info(String.format("INVOKE: %s(%d)", "create", e.toString()));
+		logger.info(String.format("INVOKE: %s(%s)", "create", e.toString()));
 		
 		this.em.persist(e);
 		
@@ -110,7 +110,7 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	 */
 	@Override
 	public void delete(CustomerOrderPositionMessage e) {
-		logger.info(String.format("INVOKE: %s(%d)", "delete", e.toString()));
+		logger.info(String.format("INVOKE: %s(%s)", "delete", e.toString()));
 		
 		this.em.remove(e);
 		
