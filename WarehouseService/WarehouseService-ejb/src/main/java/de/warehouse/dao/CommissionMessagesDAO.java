@@ -95,7 +95,7 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	 * @see de.warehouse.dao.interfaces.ICommissionMessagesDAO#create(de.warehouse.persistence.CustomerOrderPositionMessage)
 	 */
 	@Override
-	@TransactionAttribute(TransactionAttributeType.MANDATORY)
+	//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void create(CustomerOrderPositionMessage e) {
 		logger.info(String.format("INVOKE: %s(%s)", "create", e.toString()));
 		
