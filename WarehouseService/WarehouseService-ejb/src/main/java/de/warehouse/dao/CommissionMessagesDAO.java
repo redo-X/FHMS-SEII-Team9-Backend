@@ -12,6 +12,8 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.jboss.logging.Logger;
+
 import de.warehouse.dao.interfaces.ICommissionDAO;
 import de.warehouse.dao.interfaces.ICommissionMessagesDAO;
 import de.warehouse.dao.interfaces.IEmployeeDAO;
@@ -20,9 +22,12 @@ import de.warehouse.persistence.CustomerOrderPosition;
 import de.warehouse.persistence.CustomerOrderPositionMessage;
 import de.warehouse.persistence.Employee;
 import de.warehouse.persistence.WarehouseSession;
+import de.warehouse.picking.CommissionService;
 
 @Stateless
 public class CommissionMessagesDAO implements ICommissionMessagesDAO {
+	
+	private static final Logger logger = Logger.getLogger(CommissionMessagesDAO.class);
 
 	@Resource
 	private SessionContext sessionContext;
@@ -50,6 +55,8 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void commitMessage(int sessionId, int customerOrderPositionId, int responsibleEmployeeId,
 			int differenceQuantity, String note) {
+		logger.info(String.format("INVOKE: %s(%d, %d, %d, %d, %s)", "commitMessage", sessionId, customerOrderPositionId, responsibleEmployeeId, differenceQuantity, note));
+		
 		CustomerOrderPosition pos = this.commissionDAO.getCustomerOrderPositionById(customerOrderPositionId);
 		WarehouseSession session = this.warehouseSessionDAO.findById(sessionId);
 		Employee creator = session.getEmployee();
@@ -63,6 +70,8 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 		message.setPosition(pos);
 		message.setQuantityDifference(differenceQuantity);
 
+		
+		logger.info("SELF-INVOCATION: create");
 		this.selfReference.create(message);
 	}
 
@@ -71,12 +80,16 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	 */
 	@Override
 	public void updateMailFlag(int customerOrderPositionMessageId) {
+		logger.info(String.format("INVOKE: %s(%d)", "updateMailFlag", customerOrderPositionMessageId));
+		
 		CustomerOrderPositionMessage message = this.em.find(CustomerOrderPositionMessage.class,
 				customerOrderPositionMessageId);
 		
 		message.setEmailSent(true);
 		
 		this.em.merge(message);
+		
+		logger.info("SAVEPOINT");
 	}
 
 	/**
@@ -85,7 +98,11 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void create(CustomerOrderPositionMessage e) {
+		logger.info(String.format("INVOKE: %s(%d)", "create", e.toString()));
+		
 		this.em.persist(e);
+		
+		logger.info("SAVEPOINT");
 	}
 
 	/**
@@ -93,7 +110,11 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	 */
 	@Override
 	public void delete(CustomerOrderPositionMessage e) {
+		logger.info(String.format("INVOKE: %s(%d)", "delete", e.toString()));
+		
 		this.em.remove(e);
+		
+		logger.info("SAVEPOINT");
 	}
 
 	/**
@@ -101,6 +122,8 @@ public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	 */
 	@Override
 	public List<CustomerOrderPositionMessage> getPendingMessages() {
+		logger.info(String.format("INVOKE: %s", "getPendingMessages"));
+		
 		return this.em.createQuery(
 				"SELECT x FROM " + CustomerOrderPositionMessage.class.getSimpleName() + " x WHERE x.isEmailSent = 0",
 				CustomerOrderPositionMessage.class).getResultList();

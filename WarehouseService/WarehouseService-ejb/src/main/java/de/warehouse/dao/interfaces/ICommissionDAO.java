@@ -11,6 +11,7 @@ import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyFinishedExce
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyStartedException;
 import de.warehouse.shared.exceptions.CustomerOrderMustBeAllocateToPicker;
 import de.warehouse.shared.exceptions.CustomerOrderNotCompletelyCommissioned;
+import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 
@@ -90,8 +91,9 @@ public interface ICommissionDAO {
 	 * @param customerOrderId Identifier of the customer order
 	 * @param employeeId Identifier of the employee (in this business context: picker)
 	 * @throws CustomerOrderAlreadyAllocatedException if customer order already allocated
+	 * @throws EntityNotFoundException if CustomerOrder/Employee with given id(s) not found
 	 */
-	public void allocateCustomerOrder(int customerOrderId, int employeeId) throws CustomerOrderAlreadyAllocatedException;
+	public void allocateCustomerOrder(int customerOrderId, int employeeId) throws CustomerOrderAlreadyAllocatedException, EntityNotFoundException;
 	/**
 	 * Update the picked quantity of a position in a customer order.
 	 * @param customerOrderPositionId Identifier of the customer order position to be updated

@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.jboss.logging.Logger;
+
 import de.warehouse.dao.interfaces.IEmployeeDAO;
 import de.warehouse.persistence.Employee;
 import de.warehouse.persistence.Role;
@@ -15,6 +17,8 @@ import de.warehouse.persistence.Role;
  */
 @Stateless
 public class EmployeeDAO implements IEmployeeDAO {
+	
+	private static final Logger logger = Logger.getLogger(EmployeeDAO.class);
 
 	@PersistenceContext
 	private EntityManager em;
@@ -24,6 +28,8 @@ public class EmployeeDAO implements IEmployeeDAO {
 	 */
 	@Override
 	public Employee findById(int id) {
+		logger.info(String.format("INVOKE: %s(%d)", "findById", id));
+		
 		return this.em.find(Employee.class, id);
 	}
 
@@ -32,7 +38,12 @@ public class EmployeeDAO implements IEmployeeDAO {
 	 */
 	@Override
 	public Employee create(Employee e) {
+		logger.info(String.format("INVOKE: %s(%s)", "create", e.toString()));
+		
 		this.em.persist(e);
+		
+		logger.info("SAVEPOINT");
+		
 		return e;
 	}
 
@@ -41,7 +52,13 @@ public class EmployeeDAO implements IEmployeeDAO {
 	 */
 	@Override
 	public Employee update(Employee e) {
-		return this.em.merge(e);
+		logger.info(String.format("INVOKE: %s(%s)", "update", e.toString()));
+		
+		Employee result = this.em.merge(e);
+		
+		logger.info("SAVEPOINT");
+		
+		return result;
 	}
 
 	/**
@@ -49,7 +66,11 @@ public class EmployeeDAO implements IEmployeeDAO {
 	 */
 	@Override
 	public void delete(Employee e) {
+		logger.info(String.format("INVOKE: %s(%s)", "delete", e.toString()));
+		
 		this.em.remove(em.contains(e) ? e : em.merge(e));
+		
+		logger.info("SAVEPOINT");
 	}
 
 	/**
@@ -57,6 +78,8 @@ public class EmployeeDAO implements IEmployeeDAO {
 	 */
 	@Override
 	public List<Employee> getAll() {
+		logger.info(String.format("INVOKE: %s", "getAll"));
+		
 		return this.em.createQuery("SELECT e FROM " + Employee.class.getSimpleName() + " e", Employee.class)
 				.getResultList();
 	}
@@ -66,6 +89,8 @@ public class EmployeeDAO implements IEmployeeDAO {
 	 */
 	@Override
 	public List<Employee> getByRole(Role role) {
+		logger.info(String.format("INVOKE: %s(%s)", "getByRole", role));
+		
 		return this.em.createQuery("SELECT e FROM " + Employee.class.getSimpleName() + " e WHERE e.role = :role", Employee.class)
 				.setParameter("role", role)
 				.getResultList();

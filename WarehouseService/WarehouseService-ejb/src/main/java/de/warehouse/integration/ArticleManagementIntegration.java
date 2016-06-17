@@ -1,13 +1,19 @@
 package de.warehouse.integration;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 import de.warehouse.dto.IDataTransferObjectAssembler;
+import de.warehouse.dto.responses.article.GetArticlesResponse;
 import de.warehouse.dto.responses.article.UpdateQuantityOnStockOfArticleResponse;
 import de.warehouse.dto.responses.article.UpdateStorageLocationOfArticleResponse;
+import de.warehouse.persistence.Article;
+import de.warehouse.shared.exceptions.AccessDeniedException;
 import de.warehouse.shared.exceptions.EntityNotFoundException;
+import de.warehouse.shared.exceptions.SessionExpiredException;
 import de.warehouse.shared.interfaces.IArticleRepository;
 
 @WebService
@@ -50,6 +56,29 @@ public class ArticleManagementIntegration {
 			this.articleRepository.updateQuantityOnStockOfArticle(articleCode, receiptQuantity);
 		} catch (EntityNotFoundException e) {
 			response.setResultCode(-1);
+			response.setResultMessage(e.getMessage());
+		}
+		
+		return response;
+	}
+	
+	/**
+	 * Returns all articles
+	 * @param sessionId to identify the employee
+	 * @return Response that holds an array of articles
+	 */
+	public GetArticlesResponse getArticles(int sessionId) {
+		GetArticlesResponse response = new GetArticlesResponse();
+		
+		try {
+			List<Article> articles = this.articleRepository.getAll(sessionId);
+			
+			response.setArticles(this.dtoAssembler.mapEntities(articles.toArray(new Article[articles.size()])));
+		} catch (SessionExpiredException e) {
+			response.setResultCode(-1);
+			response.setResultMessage(e.getMessage());
+		} catch (AccessDeniedException e) {
+			response.setResultCode(-2);
 			response.setResultMessage(e.getMessage());
 		}
 		

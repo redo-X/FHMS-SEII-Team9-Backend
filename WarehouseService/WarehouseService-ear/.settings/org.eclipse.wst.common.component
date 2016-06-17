@@ -17,5 +17,56 @@
         <dependent-module archiveName="joda-time-2.9.3.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="jta-1.1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-transaction-jta-1.0.3.Final.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/extension/arquillian-transaction-jta/1.0.3.Final/arquillian-transaction-jta-1.0.3.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-transaction-api-1.0.3.Final.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/extension/arquillian-transaction-api/1.0.3.Final/arquillian-transaction-api-1.0.3.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-transaction-spi-1.0.3.Final.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/extension/arquillian-transaction-spi/1.0.3.Final/arquillian-transaction-spi-1.0.3.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-test-spi-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/test/arquillian-test-spi/1.1.2.Final-wildfly-1/arquillian-test-spi-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-test-api-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/test/arquillian-test-api/1.1.2.Final-wildfly-1/arquillian-test-api-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-transaction-impl-base-1.0.3.Final.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/extension/arquillian-transaction-impl-base/1.0.3.Final/arquillian-transaction-impl-base-1.0.3.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-core-spi-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/core/arquillian-core-spi/1.1.2.Final-wildfly-1/arquillian-core-spi-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-core-api-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/core/arquillian-core-api/1.1.2.Final-wildfly-1/arquillian-core-api-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-container-spi-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/container/arquillian-container-spi/1.1.2.Final-wildfly-1/arquillian-container-spi-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-config-api-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/config/arquillian-config-api/1.1.2.Final-wildfly-1/arquillian-config-api-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-config-impl-base-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/config/arquillian-config-impl-base/1.1.2.Final-wildfly-1/arquillian-config-impl-base-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-spi/2.0.0-alpha-3/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="shrinkwrap-api-1.1.2.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/shrinkwrap/shrinkwrap-api/1.1.2/shrinkwrap-api-1.1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="shrinkwrap-descriptors-api-base-2.0.0-alpha-3.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-api-base/2.0.0-alpha-3/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-container-test-spi-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/container/arquillian-container-test-spi/1.1.2.Final-wildfly-1/arquillian-container-test-spi-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="arquillian-container-test-api-1.1.2.Final-wildfly-1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/arquillian/container/arquillian-container-test-api/1.1.2.Final-wildfly-1/arquillian-container-test-api-1.1.2.Final-wildfly-1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

@@ -20,6 +20,7 @@ import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyFinishedExce
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyStartedException;
 import de.warehouse.shared.exceptions.CustomerOrderMustBeAllocateToPicker;
 import de.warehouse.shared.exceptions.CustomerOrderNotCompletelyCommissioned;
+import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 import de.warehouse.shared.interfaces.ICommissionService;
@@ -46,6 +47,8 @@ public class CommissionService implements ICommissionService {
 	@Override
 	@Lock(LockType.READ)
 	public List<CustomerOrder> getPendingCustomerOrdersWithoutPicker() {
+		logger.info(String.format("INVOKE: %s", "getPendingCustomerOrdersWithoutPicker"));
+		
 		return this.commissionDAO.getPendingCustomerOrdersWithoutPicker();
 	}
 	/**
@@ -54,6 +57,8 @@ public class CommissionService implements ICommissionService {
 	@Override
 	@Lock(LockType.READ)
 	public List<CustomerOrder> getPendingCustomerOrdersByPickerId(int pickerId) {
+		logger.info(String.format("INVOKE: %s(%d)", "getPendingCustomerOrdersByPickerId", pickerId));
+		
 		return this.commissionDAO.getPendingCustomerOrdersByEmployeeId(pickerId);
 	}
 	/**
@@ -62,6 +67,8 @@ public class CommissionService implements ICommissionService {
 	@Override
 	@Lock(LockType.READ)
 	public CustomerOrder getCustomerOrderById(int customerOrderId) {
+		logger.info(String.format("INVOKE: %s(%d)", "getCustomerOrderById", customerOrderId));
+		
 		return this.commissionDAO.getCustomerOrderById(customerOrderId);
 	}
 	/**
@@ -70,6 +77,8 @@ public class CommissionService implements ICommissionService {
 	@Override
 	@Lock(LockType.READ)
 	public List<CustomerOrderPosition> getPositionsByCustomerOrderId(int customerOrderId) {
+		logger.info(String.format("INVOKE: %s(%d)", "getPositionsByCustomerOrderId", customerOrderId));
+		
 		return this.commissionDAO.getPositionsByCustomerOrderId(customerOrderId);
 	}
 	/**
@@ -77,6 +86,8 @@ public class CommissionService implements ICommissionService {
 	 */
 	@Override
 	public List<CustomerOrderPosition> getPendingPositionsByCustomerOrderId(int customerOrderId) {
+		logger.info(String.format("INVOKE: %s(%d)", "getPendingPositionsByCustomerOrderId", customerOrderId));
+		
 		return this.commissionDAO.getPendingPositionsByCustomerOrderId(customerOrderId);
 	}
 	/**
@@ -85,7 +96,9 @@ public class CommissionService implements ICommissionService {
 	@Override
 	@Lock(LockType.WRITE)
 	public void allocateCustomerOrder(int customerOrderId, int employeeId)
-			throws CustomerOrderAlreadyAllocatedException {
+			throws CustomerOrderAlreadyAllocatedException, EntityNotFoundException {
+		logger.info(String.format("INVOKE: %s(%d, %d)", "allocateCustomerOrder", customerOrderId, employeeId));
+		
 		this.commissionDAO.allocateCustomerOrder(customerOrderId, employeeId);
 		
 		CustomerOrder order = this.commissionDAO.getCustomerOrderWithPickerById(customerOrderId);
@@ -103,6 +116,8 @@ public class CommissionService implements ICommissionService {
 	@Lock(LockType.WRITE)
 	public void updatePickedQuantity(int customerOrderPositionId, int pickedQuantity)
 			throws NegativeQuantityException, PickedQuantityTooHighException, CustomerOrderMustBeAllocateToPicker {
+		logger.info(String.format("INVOKE: %s(%d, %d)", "updatePickedQuantity", customerOrderPositionId, pickedQuantity));
+		
 		this.commissionDAO.updatePickedQuantity(customerOrderPositionId, pickedQuantity);
 	}
 	/**
@@ -112,6 +127,8 @@ public class CommissionService implements ICommissionService {
 	@Lock(LockType.WRITE)
 	public void updateStart(int customerOrderId)
 			throws CustomerOrderCommissionAlreadyStartedException, CustomerOrderMustBeAllocateToPicker {
+		logger.info(String.format("INVOKE: %s(%d)", "updateStart", customerOrderId));
+		
 		this.commissionDAO.updateStart(customerOrderId);
 
 		CustomerOrder order = this.commissionDAO.getCustomerOrderWithPickerById(customerOrderId);
@@ -130,6 +147,9 @@ public class CommissionService implements ICommissionService {
 	@Lock(LockType.WRITE)
 	public void updateFinish(int customerOrderId)
 			throws CustomerOrderCommissionAlreadyFinishedException, CustomerOrderMustBeAllocateToPicker, CustomerOrderNotCompletelyCommissioned {
+
+		logger.info(String.format("INVOKE: %s(%d)", "updateFinish", customerOrderId));
+		
 		this.commissionDAO.updateFinish(customerOrderId);
 		
 		CustomerOrder order = this.commissionDAO.getCustomerOrderWithPickerById(customerOrderId);
@@ -147,6 +167,8 @@ public class CommissionService implements ICommissionService {
 	@Override
 	@Lock(LockType.WRITE)
 	public void updateCommissionProgress(int customerOrderId) {
+		logger.info(String.format("INVOKE: %s(%d)", "updateCommissionProgress", customerOrderId));
+		
 		this.commissionDAO.updateCommissionProgress(customerOrderId);
 	}
 }

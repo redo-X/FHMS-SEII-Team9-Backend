@@ -25,6 +25,16 @@ public class DataTransferObjectAssembler implements IDataTransferObjectAssembler
 				article.getQuantityOnStock(),
 				article.getStorageLocation().getCode());
 	}
+	@Override
+	public ArticleTO[] mapEntities(Article[] articles) {
+		ArticleTO[] result = new ArticleTO[articles.length];
+		
+		for(int i = 0; i < articles.length;i++) {
+			result[i] = this.mapEntity(articles[i]);
+		}
+		
+		return result;
+	}
 
 	@Override
 	public CommissionTO mapEntity(CustomerOrder customerOrder) {
@@ -32,7 +42,7 @@ public class DataTransferObjectAssembler implements IDataTransferObjectAssembler
 		
 		return new CommissionTO(
 				customerOrder.getCode(),
-				customerOrder.getPositions().size(),
+				customerOrder.getPendingPositionCount(),
 				(int)(customerOrder.getOrderDate().getTime() / 1000),
 				(int)(customerOrder.getDueDate().getTime() / 1000),
 				picker != null,

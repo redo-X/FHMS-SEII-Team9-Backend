@@ -117,6 +117,22 @@ public class CustomerOrder implements Serializable {
 	public void updateProgress() {
 		this.setCommissionProgress(getProgress());
 	}
+	/**
+	 * Calculates the pending position.
+	 * @author David
+	 * @return Number of pending positions
+	 */
+	public int getPendingPositionCount() {
+		int pendingPositionCount = 0;
+		
+		for(CustomerOrderPosition pos : this.getPositions().values()) {
+			if(pos.getRemainingQuantity() > 0) {
+				pendingPositionCount++;
+			}
+		}
+		
+		return pendingPositionCount;
+	}
 
 	@Override
 	public String toString() {

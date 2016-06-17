@@ -166,7 +166,7 @@ public class CustomerOrderPosition implements Serializable {
 		if (pickedQuantity > this.getRemainingQuantity()) {
 			throw new PickedQuantityTooHighException("Picked quantity must be less or equals the remaining quantity.");
 		}
-		this.pickedQuantity = pickedQuantity;
+		this.pickedQuantity += pickedQuantity;
 	}
 
 	/**

@@ -76,6 +76,20 @@
 			<artifactId>jboss-jms-api_2.0_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/javax.transaction/jta -->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/org.jboss.arquillian.extension/arquillian-transaction-jta -->
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-transaction-jta</artifactId>
+			<version>1.0.3.Final</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

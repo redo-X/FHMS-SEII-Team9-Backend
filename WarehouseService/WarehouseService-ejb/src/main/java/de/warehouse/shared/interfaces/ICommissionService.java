@@ -9,6 +9,7 @@ import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyFinishedExce
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyStartedException;
 import de.warehouse.shared.exceptions.CustomerOrderMustBeAllocateToPicker;
 import de.warehouse.shared.exceptions.CustomerOrderNotCompletelyCommissioned;
+import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 
@@ -21,7 +22,7 @@ public interface ICommissionService {
 	public List<CustomerOrderPosition> getPositionsByCustomerOrderId(int customerOrderId);
 	public List<CustomerOrderPosition> getPendingPositionsByCustomerOrderId(int customerOrderId);
 	
-	public void allocateCustomerOrder(int customerOrderId, int employeeId) throws CustomerOrderAlreadyAllocatedException;
+	public void allocateCustomerOrder(int customerOrderId, int employeeId) throws CustomerOrderAlreadyAllocatedException, EntityNotFoundException;
 	
 	public void updatePickedQuantity(int customerOrderPositionId, int pickedQuantity) throws NegativeQuantityException, PickedQuantityTooHighException, CustomerOrderMustBeAllocateToPicker;
 
@@ -29,7 +30,4 @@ public interface ICommissionService {
 	public void updateFinish(int customerOrderId) throws CustomerOrderCommissionAlreadyFinishedException, CustomerOrderMustBeAllocateToPicker, CustomerOrderNotCompletelyCommissioned;
 	
 	public void updateCommissionProgress(int customerOrderId);
-	
-	// TODO: Möglichkeit einen Misstand zu melden
-	
 }

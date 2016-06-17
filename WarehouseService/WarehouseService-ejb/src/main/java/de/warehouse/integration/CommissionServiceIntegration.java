@@ -21,6 +21,7 @@ import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyFinishedExce
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyStartedException;
 import de.warehouse.shared.exceptions.CustomerOrderMustBeAllocateToPicker;
 import de.warehouse.shared.exceptions.CustomerOrderNotCompletelyCommissioned;
+import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 import de.warehouse.shared.interfaces.ICommissionMessages;
@@ -46,6 +47,9 @@ public class CommissionServiceIntegration {
 			this.commissionService.allocateCustomerOrder(customerOrderId, employeeId);
 		} catch (CustomerOrderAlreadyAllocatedException e) {
 			response.setResultCode(-1);
+			response.setResultMessage(e.getMessage());
+		} catch (EntityNotFoundException e) {
+			response.setResultCode(-2);
 			response.setResultMessage(e.getMessage());
 		}
 
@@ -135,8 +139,10 @@ public class CommissionServiceIntegration {
 		return response;
 	}
 
-	public CommitCommissionMessageResponse commitCommissionMessage() {
+	public CommitCommissionMessageResponse commitCommissionMessage(int sessionId, int commissionPositionId, int differenceQuantity, String note) {
 		CommitCommissionMessageResponse response = new CommitCommissionMessageResponse();
+		
+		this.commissionMessageService.commitMessage(sessionId, commissionPositionId, differenceQuantity, note);
 		
 		return response;
 	}

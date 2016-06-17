@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.jboss.logging.Logger;
+
 import de.warehouse.dao.interfaces.IArticleDAO;
 import de.warehouse.persistence.Article;
 import de.warehouse.persistence.StorageLocation;
@@ -18,6 +20,8 @@ import de.warehouse.shared.exceptions.EntityWithIdentifierAlreadyExistsException
 @Stateless
 public class ArticleDAO implements IArticleDAO {
 
+	private static final Logger logger = Logger.getLogger(ArticleDAO.class);
+
 	@PersistenceContext
 	private EntityManager em;
 
@@ -26,6 +30,8 @@ public class ArticleDAO implements IArticleDAO {
 	 */
 	@Override
 	public Article findById(String id) {
+		logger.info("findById: " + id);
+
 		return this.em.find(Article.class, id);
 	}
 
@@ -34,6 +40,8 @@ public class ArticleDAO implements IArticleDAO {
 	 */
 	@Override
 	public List<Article> getAll() {
+		logger.info("getAll");
+
 		return this.em.createQuery("SELECT x FROM " + Article.class.getSimpleName() + " x", Article.class)
 				.getResultList();
 	}
@@ -42,13 +50,17 @@ public class ArticleDAO implements IArticleDAO {
 	 * @see de.warehouse.dao.interfaces.IArticleDAO#getByStorageLocation(String)
 	 */
 	@Override
-	public List<Article> getByStorageLocation(String storageLocationId) throws de.warehouse.shared.exceptions.EntityNotFoundException {
+	public List<Article> getByStorageLocation(String storageLocationId)
+			throws de.warehouse.shared.exceptions.EntityNotFoundException {
+		logger.info("getByStorageLocation: " + storageLocationId);
+
 		StorageLocation storageLocation = this.em.find(StorageLocation.class, storageLocationId);
-		
-		if(null == storageLocation) {
-			throw new EntityNotFoundException(String.format("Storage Location with id: '%s' not found.", storageLocationId));
+
+		if (null == storageLocation) {
+			throw new EntityNotFoundException(
+					String.format("Storage Location with id: '%s' not found.", storageLocationId));
 		}
-		
+
 		return this.em
 				.createQuery("SELECT x FROM " + Article.class.getSimpleName()
 						+ " x WHERE x.storageLocation = :storageLocation", Article.class)
@@ -56,25 +68,37 @@ public class ArticleDAO implements IArticleDAO {
 	}
 
 	/**
-	 * @throws EntityNotFoundException 
+	 * @throws EntityNotFoundException
 	 * @see de.warehouse.dao.interfaces.IArticleDAO#updateStorageLocationOfArticle(String,
 	 *      String)
 	 */
 	@Override
-	public void updateStorageLocationOfArticle(String articleId, String storageLocationId) throws EntityNotFoundException {
+	public void updateStorageLocationOfArticle(String articleId, String storageLocationId)
+			throws EntityNotFoundException {
+		logger.info("updateStorageLocationOfArticle: " + articleId + "," + storageLocationId);
+
 		Article a = this.em.find(Article.class, articleId);
-		if(null == a) {
+		if (null == a) {
+			logger.error("Article with id " + articleId + " not found.");
+
 			throw new EntityNotFoundException(String.format("Article with id: '%s' not found.", articleId));
 		}
-		
+
 		StorageLocation s = this.em.find(StorageLocation.class, storageLocationId);
-		if(null == s) {
-			throw new EntityNotFoundException(String.format("StorageLocation with id: '%s' not found.", storageLocationId));
+		if (null == s) {
+			logger.error("StorageLocation with id " + storageLocationId + " not found.");
+
+			throw new EntityNotFoundException(
+					String.format("StorageLocation with id: '%s' not found.", storageLocationId));
 		}
+
+		logger.info("Set new storage location " + storageLocationId + " of article + " + articleId);
 		
 		a.setStorageLocation(s);
 
 		this.em.merge(a);
+		
+		logger.info("Savepoint.");
 	}
 
 	/**
@@ -83,20 +107,30 @@ public class ArticleDAO implements IArticleDAO {
 	 */
 	@Override
 	public void updateQuantityOnStockOfArticle(String articleId, int receiptQuantity) throws EntityNotFoundException {
+		logger.info("updateQuantityOnStockOfArticle: " + articleId + "," + receiptQuantity);
+		
 		if (0 == receiptQuantity) {
+			logger.error("receiptQuantity is 0!");
+			
 			return;
 		}
-		
+
 		Article a = this.em.find(Article.class, articleId);
-		if(null == a) {
+		if (null == a) {
+			logger.error("Article with id " + articleId + " not found.");
+			
 			throw new EntityNotFoundException(String.format("Article with id: '%s' not found.", articleId));
 		}
 
 		int newQuantityOnStock = a.getQuantityOnStock() + receiptQuantity;
 
+		logger.info("Set new quantity on stock " + newQuantityOnStock + " of article + " + articleId);
+		
 		a.setQuantityOnStock(newQuantityOnStock);
 
 		this.em.merge(a);
+		
+		logger.info("Savepoint.");
 	}
 
 	/**
@@ -105,10 +139,15 @@ public class ArticleDAO implements IArticleDAO {
 	@Override
 	public Article create(Article a) throws EntityWithIdentifierAlreadyExistsException {
 		if (this.findById(a.getCode()) != null) {
+			logger.error("Article with id " + a.getCode() + " already exists.");
+			
 			throw new EntityWithIdentifierAlreadyExistsException(
 					String.format("Article with code '%s' already exists.", a.getCode()));
 		}
 		this.em.persist(a);
+		
+		logger.info("Savepoint.");
+		
 		return a;
 	}
 
@@ -117,6 +156,7 @@ public class ArticleDAO implements IArticleDAO {
 	 */
 	@Override
 	public Article update(Article a) {
+		logger.info("Article with id " + a.getCode() + " updating.");
 		return this.em.merge(a);
 	}
 
@@ -126,5 +166,7 @@ public class ArticleDAO implements IArticleDAO {
 	@Override
 	public void delete(Article a) {
 		this.em.remove(em.contains(a) ? a : em.merge(a));
+		
+		logger.info("Article with id " + a.getCode() + " removed.");
 	}
 }

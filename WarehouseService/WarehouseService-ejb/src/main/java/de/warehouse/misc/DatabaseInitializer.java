@@ -160,5 +160,15 @@ public class DatabaseInitializer {
 		this.em.persist(co1Pos1);
 		this.em.persist(co1Pos2);
 		this.em.persist(co1Pos3);
+		
+		Employee e5 = new Employee();
+
+		e5.setFirstName("Jane");
+		e5.setLastName("Doe");
+		e5.setMailAddress("dm070491@fh-muenster.de");
+		e5.setPassword("geheim");
+		e5.setRole(Role.Lagerist);
+
+		this.em.persist(e5);
 	}
 }
