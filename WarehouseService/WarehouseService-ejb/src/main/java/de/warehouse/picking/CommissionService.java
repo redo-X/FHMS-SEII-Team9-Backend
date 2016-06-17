@@ -14,7 +14,9 @@ import de.warehouse.dao.interfaces.ICommissionDAO;
 import de.warehouse.messaging.OutputRequesterBean;
 import de.warehouse.persistence.CustomerOrder;
 import de.warehouse.persistence.CustomerOrderPosition;
+import de.warehouse.persistence.Role;
 import de.warehouse.shared.DocTypes;
+import de.warehouse.shared.exceptions.AccessDeniedException;
 import de.warehouse.shared.exceptions.CustomerOrderAlreadyAllocatedException;
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyFinishedException;
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyStartedException;
@@ -23,6 +25,7 @@ import de.warehouse.shared.exceptions.CustomerOrderNotCompletelyCommissioned;
 import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
+import de.warehouse.shared.exceptions.SessionExpiredException;
 import de.warehouse.shared.interfaces.ICommissionService;
 import de.warehouse.shared.interfaces.ISessionManagement;
 
@@ -42,12 +45,16 @@ public class CommissionService implements ICommissionService {
 	private OutputRequesterBean requesterBean;
 
 	/**
+	 * @throws SessionExpiredException 
 	 * @see de.warehouse.shared.interfaces.ICommissionService#getPendingCustomerOrdersWithoutPicker()
 	 */
 	@Override
 	@Lock(LockType.READ)
-	public List<CustomerOrder> getPendingCustomerOrdersWithoutPicker() {
+	public List<CustomerOrder> getPendingCustomerOrdersWithoutPicker(int sessionId) throws SessionExpiredException, AccessDeniedException {
+				
 		logger.info(String.format("INVOKE: %s", "getPendingCustomerOrdersWithoutPicker"));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		return this.commissionDAO.getPendingCustomerOrdersWithoutPicker();
 	}
@@ -56,18 +63,25 @@ public class CommissionService implements ICommissionService {
 	 */
 	@Override
 	@Lock(LockType.READ)
-	public List<CustomerOrder> getPendingCustomerOrdersByPickerId(int pickerId) {
+	public List<CustomerOrder> getPendingCustomerOrdersByPickerId(int sessionId, int pickerId) throws AccessDeniedException, SessionExpiredException {
+
 		logger.info(String.format("INVOKE: %s(%d)", "getPendingCustomerOrdersByPickerId", pickerId));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		return this.commissionDAO.getPendingCustomerOrdersByEmployeeId(pickerId);
 	}
 	/**
+	 * @throws AccessDeniedException 
+	 * @throws SessionExpiredException 
 	 * @see de.warehouse.shared.interfaces.ICommissionService#getCustomerOrderById(int)
 	 */
 	@Override
 	@Lock(LockType.READ)
-	public CustomerOrder getCustomerOrderById(int customerOrderId) {
+	public CustomerOrder getCustomerOrderById(int sessionId, int customerOrderId) throws SessionExpiredException, AccessDeniedException {
 		logger.info(String.format("INVOKE: %s(%d)", "getCustomerOrderById", customerOrderId));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		return this.commissionDAO.getCustomerOrderById(customerOrderId);
 	}
@@ -76,8 +90,11 @@ public class CommissionService implements ICommissionService {
 	 */
 	@Override
 	@Lock(LockType.READ)
-	public List<CustomerOrderPosition> getPositionsByCustomerOrderId(int customerOrderId) {
+	public List<CustomerOrderPosition> getPositionsByCustomerOrderId(int sessionId, int customerOrderId) throws SessionExpiredException, AccessDeniedException {
+		
 		logger.info(String.format("INVOKE: %s(%d)", "getPositionsByCustomerOrderId", customerOrderId));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		return this.commissionDAO.getPositionsByCustomerOrderId(customerOrderId);
 	}
@@ -85,8 +102,10 @@ public class CommissionService implements ICommissionService {
 	 * @see de.warehouse.shared.interfaces.ICommissionService#getPendingPositionsByCustomerOrderId(int)
 	 */
 	@Override
-	public List<CustomerOrderPosition> getPendingPositionsByCustomerOrderId(int customerOrderId) {
+	public List<CustomerOrderPosition> getPendingPositionsByCustomerOrderId(int sessionId, int customerOrderId) throws SessionExpiredException, AccessDeniedException {
 		logger.info(String.format("INVOKE: %s(%d)", "getPendingPositionsByCustomerOrderId", customerOrderId));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		return this.commissionDAO.getPendingPositionsByCustomerOrderId(customerOrderId);
 	}
@@ -95,9 +114,11 @@ public class CommissionService implements ICommissionService {
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public void allocateCustomerOrder(int customerOrderId, int employeeId)
-			throws CustomerOrderAlreadyAllocatedException, EntityNotFoundException {
+	public void allocateCustomerOrder(int sessionId, int customerOrderId, int employeeId)
+			throws CustomerOrderAlreadyAllocatedException, EntityNotFoundException, SessionExpiredException, AccessDeniedException {
 		logger.info(String.format("INVOKE: %s(%d, %d)", "allocateCustomerOrder", customerOrderId, employeeId));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		this.commissionDAO.allocateCustomerOrder(customerOrderId, employeeId);
 		
@@ -114,9 +135,11 @@ public class CommissionService implements ICommissionService {
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public void updatePickedQuantity(int customerOrderPositionId, int pickedQuantity)
-			throws NegativeQuantityException, PickedQuantityTooHighException, CustomerOrderMustBeAllocateToPicker {
+	public void updatePickedQuantity(int sessionId, int customerOrderPositionId, int pickedQuantity)
+			throws NegativeQuantityException, PickedQuantityTooHighException, CustomerOrderMustBeAllocateToPicker, SessionExpiredException, AccessDeniedException {
 		logger.info(String.format("INVOKE: %s(%d, %d)", "updatePickedQuantity", customerOrderPositionId, pickedQuantity));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		this.commissionDAO.updatePickedQuantity(customerOrderPositionId, pickedQuantity);
 	}
@@ -125,9 +148,11 @@ public class CommissionService implements ICommissionService {
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public void updateStart(int customerOrderId)
-			throws CustomerOrderCommissionAlreadyStartedException, CustomerOrderMustBeAllocateToPicker {
+	public void updateStart(int sessionId, int customerOrderId)
+			throws CustomerOrderCommissionAlreadyStartedException, CustomerOrderMustBeAllocateToPicker, SessionExpiredException, AccessDeniedException {
 		logger.info(String.format("INVOKE: %s(%d)", "updateStart", customerOrderId));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		this.commissionDAO.updateStart(customerOrderId);
 
@@ -145,10 +170,12 @@ public class CommissionService implements ICommissionService {
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public void updateFinish(int customerOrderId)
-			throws CustomerOrderCommissionAlreadyFinishedException, CustomerOrderMustBeAllocateToPicker, CustomerOrderNotCompletelyCommissioned {
+	public void updateFinish(int sessionId, int customerOrderId)
+			throws CustomerOrderCommissionAlreadyFinishedException, CustomerOrderMustBeAllocateToPicker, CustomerOrderNotCompletelyCommissioned, SessionExpiredException, AccessDeniedException {
 
 		logger.info(String.format("INVOKE: %s(%d)", "updateFinish", customerOrderId));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		this.commissionDAO.updateFinish(customerOrderId);
 		
@@ -166,8 +193,10 @@ public class CommissionService implements ICommissionService {
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public void updateCommissionProgress(int customerOrderId) {
+	public void updateCommissionProgress(int sessionId, int customerOrderId) throws SessionExpiredException, AccessDeniedException {
 		logger.info(String.format("INVOKE: %s(%d)", "updateCommissionProgress", customerOrderId));
+		
+		this.sessionManagementBean.ensureAuthorization(Role.Kommissionierer, sessionId);
 		
 		this.commissionDAO.updateCommissionProgress(customerOrderId);
 	}

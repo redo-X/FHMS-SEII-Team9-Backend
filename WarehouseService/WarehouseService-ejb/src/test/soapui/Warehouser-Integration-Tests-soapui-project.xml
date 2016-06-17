@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="e73a0d21-7791-4d9d-ab6b-64ebb3d1521c" activeEnvironment="Default" name="Warehouser Integration Tests" resourceRoot="" soapui-version="5.2.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="a736de38-6f14-4c3f-8a13-bde79c063ac1" wsaVersion="NONE" name="ArticleManagementIntegrationServiceSoapBinding" type="wsdl" bindingName="{http://integration.warehouse.de/}ArticleManagementIntegrationServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration?wsdl"><con:part><con:url>http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ArticleManagementIntegrationService" targetNamespace="http://integration.warehouse.de/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://integration.warehouse.de/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://integration.warehouse.de/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="getArticles" type="tns:getArticles"/>
+      <xs:element name="getArticlesResponse" type="tns:getArticlesResponse"/>
+      <xs:element name="updateQuantityOnStockOfArticle" type="tns:updateQuantityOnStockOfArticle"/>
+      <xs:element name="updateQuantityOnStockOfArticleResponse" type="tns:updateQuantityOnStockOfArticleResponse"/>
+      <xs:element name="updateStorageLocationOfArticle" type="tns:updateStorageLocationOfArticle"/>
+      <xs:element name="updateStorageLocationOfArticleResponse" type="tns:updateStorageLocationOfArticleResponse"/>
+      <xs:complexType name="updateQuantityOnStockOfArticle">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element name="arg1" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateQuantityOnStockOfArticleResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:UpdateQuantityOnStockOfArticleResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UpdateQuantityOnStockOfArticleResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="responseBase">
+        <xs:complexContent>
+          <xs:extension base="tns:dataTransferObjectBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="resultCode" type="xs:int"/>
+              <xs:element minOccurs="0" name="resultMessage" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="dataTransferObjectBase">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="updateStorageLocationOfArticle">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateStorageLocationOfArticleResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:UpdateStorageLocationOfArticleResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UpdateStorageLocationOfArticleResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="getArticles">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getArticlesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:GetArticlesResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetArticlesResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="articles" nillable="true" type="tns:articleTO"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="articleTO">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="code" type="xs:string"/>
+              <xs:element minOccurs="0" name="name" type="xs:string"/>
+              <xs:element minOccurs="0" name="quantityOnStock" type="xs:int"/>
+              <xs:element minOccurs="0" name="storageLocation" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="updateQuantityOnStockOfArticle">
+    <wsdl:part element="tns:updateQuantityOnStockOfArticle" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateStorageLocationOfArticle">
+    <wsdl:part element="tns:updateStorageLocationOfArticle" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getArticles">
+    <wsdl:part element="tns:getArticles" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateStorageLocationOfArticleResponse">
+    <wsdl:part element="tns:updateStorageLocationOfArticleResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getArticlesResponse">
+    <wsdl:part element="tns:getArticlesResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateQuantityOnStockOfArticleResponse">
+    <wsdl:part element="tns:updateQuantityOnStockOfArticleResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ArticleManagementIntegration">
+    <wsdl:operation name="updateQuantityOnStockOfArticle">
+      <wsdl:input message="tns:updateQuantityOnStockOfArticle" name="updateQuantityOnStockOfArticle"></wsdl:input>
+      <wsdl:output message="tns:updateQuantityOnStockOfArticleResponse" name="updateQuantityOnStockOfArticleResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateStorageLocationOfArticle">
+      <wsdl:input message="tns:updateStorageLocationOfArticle" name="updateStorageLocationOfArticle"></wsdl:input>
+      <wsdl:output message="tns:updateStorageLocationOfArticleResponse" name="updateStorageLocationOfArticleResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArticles">
+      <wsdl:input message="tns:getArticles" name="getArticles"></wsdl:input>
+      <wsdl:output message="tns:getArticlesResponse" name="getArticlesResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ArticleManagementIntegrationServiceSoapBinding" type="tns:ArticleManagementIntegration">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="updateQuantityOnStockOfArticle">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateQuantityOnStockOfArticle">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateQuantityOnStockOfArticleResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateStorageLocationOfArticle">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateStorageLocationOfArticle">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateStorageLocationOfArticleResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getArticles">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getArticles">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getArticlesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ArticleManagementIntegrationService">
+    <wsdl:port binding="tns:ArticleManagementIntegrationServiceSoapBinding" name="ArticleManagementIntegrationPort">
+      <soap:address location="http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration</con:endpoint></con:endpoints><con:operation id="64585efd-b52d-4b17-8c56-272f133771a2" isOneWay="false" action="" name="getArticles" bindingOperationName="getArticles" type="Request-Response" outputName="getArticlesResponse" inputName="getArticles" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="08912da5-f63b-4a8b-a6a3-16e6c086083b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getArticles>\r
+         <arg0>?</arg0>\r
+      </int:getArticles>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/ArticleManagementIntegration/getArticles"/></con:call></con:operation><con:operation id="a7226b23-df43-4a02-a073-bdcc10963011" isOneWay="false" action="" name="updateQuantityOnStockOfArticle" bindingOperationName="updateQuantityOnStockOfArticle" type="Request-Response" outputName="updateQuantityOnStockOfArticleResponse" inputName="updateQuantityOnStockOfArticle" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ac681619-e988-4550-b8b3-6e39826139ae" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updateQuantityOnStockOfArticle>\r
+         <!--Optional:-->\r
+         <arg0>?</arg0>\r
+         <arg1>?</arg1>\r
+      </int:updateQuantityOnStockOfArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/ArticleManagementIntegration/updateQuantityOnStockOfArticle"/></con:call></con:operation><con:operation id="a7938db6-807b-4345-b2bb-eea6c7f76f56" isOneWay="false" action="" name="updateStorageLocationOfArticle" bindingOperationName="updateStorageLocationOfArticle" type="Request-Response" outputName="updateStorageLocationOfArticleResponse" inputName="updateStorageLocationOfArticle" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="eb03296d-1766-4f01-93ee-be7b2f660b41" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updateStorageLocationOfArticle>\r
+         <!--Optional:-->\r
+         <arg0>?</arg0>\r
+         <!--Optional:-->\r
+         <arg1>?</arg1>\r
+      </int:updateStorageLocationOfArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/ArticleManagementIntegration/updateStorageLocationOfArticle"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="628819db-d54b-4d90-8989-674595add26c" wsaVersion="NONE" name="SessionManagementIntegrationServiceSoapBinding" type="wsdl" bindingName="{http://integration.warehouse.de/}SessionManagementIntegrationServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration?wsdl"><con:part><con:url>http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="SessionManagementIntegrationService" targetNamespace="http://integration.warehouse.de/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://integration.warehouse.de/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://integration.warehouse.de/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="login" type="tns:login"/>
+      <xs:element name="loginResponse" type="tns:loginResponse"/>
+      <xs:element name="logout" type="tns:logout"/>
+      <xs:element name="logoutResponse" type="tns:logoutResponse"/>
+      <xs:complexType name="login">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="loginResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:LoginResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LoginResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="role" type="xs:int"/>
+              <xs:element minOccurs="0" name="sessionId" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="responseBase">
+        <xs:complexContent>
+          <xs:extension base="tns:dataTransferObjectBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="resultCode" type="xs:int"/>
+              <xs:element minOccurs="0" name="resultMessage" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="dataTransferObjectBase">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="logout">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="logoutResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:LogoutResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="LogoutResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="login">
+    <wsdl:part element="tns:login" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part element="tns:loginResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logoutResponse">
+    <wsdl:part element="tns:logoutResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logout">
+    <wsdl:part element="tns:logout" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SessionManagementIntegration">
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:login" name="login"></wsdl:input>
+      <wsdl:output message="tns:loginResponse" name="loginResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdl:input message="tns:logout" name="logout"></wsdl:input>
+      <wsdl:output message="tns:logoutResponse" name="logoutResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SessionManagementIntegrationServiceSoapBinding" type="tns:SessionManagementIntegration">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="login">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="logout">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="logoutResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SessionManagementIntegrationService">
+    <wsdl:port binding="tns:SessionManagementIntegrationServiceSoapBinding" name="SessionManagementIntegrationPort">
+      <soap:address location="http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration</con:endpoint></con:endpoints><con:operation id="e13f9230-5c24-4a8f-8c42-f0404eb16ab8" isOneWay="false" action="" name="login" bindingOperationName="login" type="Request-Response" outputName="loginResponse" inputName="login" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8a5efa42-1b96-42a8-9305-01c6e622e616" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:login>\r
+         <arg0>?</arg0>\r
+         <!--Optional:-->\r
+         <arg1>?</arg1>\r
+      </int:login>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/SessionManagementIntegration/login"/></con:call></con:operation><con:operation id="0302fc9d-74a4-4c0b-bd7b-e4e7b14b8251" isOneWay="false" action="" name="logout" bindingOperationName="logout" type="Request-Response" outputName="logoutResponse" inputName="logout" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="60ea3a81-371d-4fa0-bd8b-baed2e8060bb" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:logout>\r
+         <arg0>?</arg0>\r
+      </int:logout>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/SessionManagementIntegration/logout"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="963a8b45-ad56-4710-9be2-060352ba588d" wsaVersion="NONE" name="CommissionServiceIntegrationServiceSoapBinding" type="wsdl" bindingName="{http://integration.warehouse.de/}CommissionServiceIntegrationServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration?wsdl"><con:part><con:url>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="CommissionServiceIntegrationService" targetNamespace="http://integration.warehouse.de/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://integration.warehouse.de/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://integration.warehouse.de/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="allocateCommission" type="tns:allocateCommission"/>
+      <xs:element name="allocateCommissionResponse" type="tns:allocateCommissionResponse"/>
+      <xs:element name="commitCommissionMessage" type="tns:commitCommissionMessage"/>
+      <xs:element name="commitCommissionMessageResponse" type="tns:commitCommissionMessageResponse"/>
+      <xs:element name="getPendingCommissionPositionsByCommissionId" type="tns:getPendingCommissionPositionsByCommissionId"/>
+      <xs:element name="getPendingCommissionPositionsByCommissionIdResponse" type="tns:getPendingCommissionPositionsByCommissionIdResponse"/>
+      <xs:element name="getPendingCommissionsByPickerId" type="tns:getPendingCommissionsByPickerId"/>
+      <xs:element name="getPendingCommissionsByPickerIdResponse" type="tns:getPendingCommissionsByPickerIdResponse"/>
+      <xs:element name="getPendingCommissionsWithoutPicker" type="tns:getPendingCommissionsWithoutPicker"/>
+      <xs:element name="getPendingCommissionsWithoutPickerResponse" type="tns:getPendingCommissionsWithoutPickerResponse"/>
+      <xs:element name="updateFinishOfCommission" type="tns:updateFinishOfCommission"/>
+      <xs:element name="updateFinishOfCommissionResponse" type="tns:updateFinishOfCommissionResponse"/>
+      <xs:element name="updatePickedQuantity" type="tns:updatePickedQuantity"/>
+      <xs:element name="updatePickedQuantityResponse" type="tns:updatePickedQuantityResponse"/>
+      <xs:element name="updateStartOfCommission" type="tns:updateStartOfCommission"/>
+      <xs:element name="updateStartOfCommissionResponse" type="tns:updateStartOfCommissionResponse"/>
+      <xs:complexType name="allocateCommission">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+          <xs:element name="arg1" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="allocateCommissionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:AllocateCommissionResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AllocateCommissionResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="responseBase">
+        <xs:complexContent>
+          <xs:extension base="tns:dataTransferObjectBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="resultCode" type="xs:int"/>
+              <xs:element minOccurs="0" name="resultMessage" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="dataTransferObjectBase">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getPendingCommissionsByPickerId">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getPendingCommissionsByPickerIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:GetCommissionsResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetCommissionsResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="commissions" nillable="true" type="tns:commissionTO"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="commissionTO">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence>
+              <xs:element name="commissionId" type="xs:int"/>
+              <xs:element name="dueDateAsUnixTimestamp" type="xs:int"/>
+              <xs:element minOccurs="0" name="employeeCode" type="xs:int"/>
+              <xs:element minOccurs="0" name="employeeFullName" type="xs:string"/>
+              <xs:element name="orderDateAsUnixTimestamp" type="xs:int"/>
+              <xs:element name="positionCount" type="xs:int"/>
+              <xs:element name="progress" type="xs:double"/>
+              <xs:element name="relatedToEmployee" type="xs:boolean"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="updateStartOfCommission">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateStartOfCommissionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:UpdateStartOfCommissionResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UpdateStartOfCommissionResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="updateFinishOfCommission">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateFinishOfCommissionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:UpdateFinishOfCommissionResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UpdateFinishOfCommissionResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="getPendingCommissionPositionsByCommissionId">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getPendingCommissionPositionsByCommissionIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:GetCommissionPositionsResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetCommissionPositionsResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="commissionPositions" nillable="true" type="tns:commissionPositionTO"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="commissionPositionTO">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="articleCode" type="xs:string"/>
+              <xs:element minOccurs="0" name="articleName" type="xs:string"/>
+              <xs:element minOccurs="0" name="commissionPositionId" type="xs:int"/>
+              <xs:element minOccurs="0" name="quantityOnStock" type="xs:int"/>
+              <xs:element minOccurs="0" name="quantityToCommit" type="xs:int"/>
+              <xs:element minOccurs="0" name="storageLocation" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="updatePickedQuantity">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+          <xs:element name="arg1" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updatePickedQuantityResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:UpdatePickedQuantityResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UpdatePickedQuantityResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="getPendingCommissionsWithoutPicker">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getPendingCommissionsWithoutPickerResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:GetCommissionsResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="commitCommissionMessage">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+          <xs:element name="arg1" type="xs:int"/>
+          <xs:element name="arg2" type="xs:int"/>
+          <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="commitCommissionMessageResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:CommitCommissionMessageResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CommitCommissionMessageResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:responseBase">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getPendingCommissionPositionsByCommissionIdResponse">
+    <wsdl:part element="tns:getPendingCommissionPositionsByCommissionIdResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPendingCommissionsByPickerId">
+    <wsdl:part element="tns:getPendingCommissionsByPickerId" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateStartOfCommission">
+    <wsdl:part element="tns:updateStartOfCommission" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPendingCommissionsByPickerIdResponse">
+    <wsdl:part element="tns:getPendingCommissionsByPickerIdResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateStartOfCommissionResponse">
+    <wsdl:part element="tns:updateStartOfCommissionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPendingCommissionPositionsByCommissionId">
+    <wsdl:part element="tns:getPendingCommissionPositionsByCommissionId" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="commitCommissionMessage">
+    <wsdl:part element="tns:commitCommissionMessage" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="commitCommissionMessageResponse">
+    <wsdl:part element="tns:commitCommissionMessageResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="allocateCommissionResponse">
+    <wsdl:part element="tns:allocateCommissionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="allocateCommission">
+    <wsdl:part element="tns:allocateCommission" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateFinishOfCommission">
+    <wsdl:part element="tns:updateFinishOfCommission" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateFinishOfCommissionResponse">
+    <wsdl:part element="tns:updateFinishOfCommissionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updatePickedQuantity">
+    <wsdl:part element="tns:updatePickedQuantity" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPendingCommissionsWithoutPickerResponse">
+    <wsdl:part element="tns:getPendingCommissionsWithoutPickerResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updatePickedQuantityResponse">
+    <wsdl:part element="tns:updatePickedQuantityResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPendingCommissionsWithoutPicker">
+    <wsdl:part element="tns:getPendingCommissionsWithoutPicker" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CommissionServiceIntegration">
+    <wsdl:operation name="allocateCommission">
+      <wsdl:input message="tns:allocateCommission" name="allocateCommission"></wsdl:input>
+      <wsdl:output message="tns:allocateCommissionResponse" name="allocateCommissionResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPendingCommissionsByPickerId">
+      <wsdl:input message="tns:getPendingCommissionsByPickerId" name="getPendingCommissionsByPickerId"></wsdl:input>
+      <wsdl:output message="tns:getPendingCommissionsByPickerIdResponse" name="getPendingCommissionsByPickerIdResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateStartOfCommission">
+      <wsdl:input message="tns:updateStartOfCommission" name="updateStartOfCommission"></wsdl:input>
+      <wsdl:output message="tns:updateStartOfCommissionResponse" name="updateStartOfCommissionResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateFinishOfCommission">
+      <wsdl:input message="tns:updateFinishOfCommission" name="updateFinishOfCommission"></wsdl:input>
+      <wsdl:output message="tns:updateFinishOfCommissionResponse" name="updateFinishOfCommissionResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPendingCommissionPositionsByCommissionId">
+      <wsdl:input message="tns:getPendingCommissionPositionsByCommissionId" name="getPendingCommissionPositionsByCommissionId"></wsdl:input>
+      <wsdl:output message="tns:getPendingCommissionPositionsByCommissionIdResponse" name="getPendingCommissionPositionsByCommissionIdResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updatePickedQuantity">
+      <wsdl:input message="tns:updatePickedQuantity" name="updatePickedQuantity"></wsdl:input>
+      <wsdl:output message="tns:updatePickedQuantityResponse" name="updatePickedQuantityResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPendingCommissionsWithoutPicker">
+      <wsdl:input message="tns:getPendingCommissionsWithoutPicker" name="getPendingCommissionsWithoutPicker"></wsdl:input>
+      <wsdl:output message="tns:getPendingCommissionsWithoutPickerResponse" name="getPendingCommissionsWithoutPickerResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="commitCommissionMessage">
+      <wsdl:input message="tns:commitCommissionMessage" name="commitCommissionMessage"></wsdl:input>
+      <wsdl:output message="tns:commitCommissionMessageResponse" name="commitCommissionMessageResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CommissionServiceIntegrationServiceSoapBinding" type="tns:CommissionServiceIntegration">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="allocateCommission">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="allocateCommission">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="allocateCommissionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPendingCommissionsByPickerId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPendingCommissionsByPickerId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPendingCommissionsByPickerIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateStartOfCommission">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateStartOfCommission">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateStartOfCommissionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateFinishOfCommission">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateFinishOfCommission">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateFinishOfCommissionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPendingCommissionPositionsByCommissionId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPendingCommissionPositionsByCommissionId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPendingCommissionPositionsByCommissionIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updatePickedQuantity">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updatePickedQuantity">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updatePickedQuantityResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPendingCommissionsWithoutPicker">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPendingCommissionsWithoutPicker">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPendingCommissionsWithoutPickerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="commitCommissionMessage">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="commitCommissionMessage">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="commitCommissionMessageResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CommissionServiceIntegrationService">
+    <wsdl:port binding="tns:CommissionServiceIntegrationServiceSoapBinding" name="CommissionServiceIntegrationPort">
+      <soap:address location="http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint></con:endpoints><con:operation id="9a42f12d-af23-4847-b72c-fa2f7035803d" isOneWay="false" action="" name="allocateCommission" bindingOperationName="allocateCommission" type="Request-Response" outputName="allocateCommissionResponse" inputName="allocateCommission" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9a0ac9d9-40ac-485c-bcc4-506c6ce9e8b2" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:allocateCommission>\r
+         <arg0>?</arg0>\r
+         <arg1>?</arg1>\r
+      </int:allocateCommission>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/CommissionServiceIntegration/allocateCommission"/></con:call></con:operation><con:operation id="fe134b5a-aa77-452e-81bd-51f72a1a9103" isOneWay="false" action="" name="commitCommissionMessage" bindingOperationName="commitCommissionMessage" type="Request-Response" outputName="commitCommissionMessageResponse" inputName="commitCommissionMessage" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d758c04a-6f1a-492d-81e0-b62ef6085117" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:commitCommissionMessage>\r
+         <arg0>?</arg0>\r
+         <arg1>?</arg1>\r
+         <arg2>?</arg2>\r
+         <!--Optional:-->\r
+         <arg3>?</arg3>\r
+      </int:commitCommissionMessage>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/CommissionServiceIntegration/commitCommissionMessage"/></con:call></con:operation><con:operation id="e45206ff-8ff7-4710-b846-dd2afff0184b" isOneWay="false" action="" name="getPendingCommissionPositionsByCommissionId" bindingOperationName="getPendingCommissionPositionsByCommissionId" type="Request-Response" outputName="getPendingCommissionPositionsByCommissionIdResponse" inputName="getPendingCommissionPositionsByCommissionId" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="faa1f0cb-7177-4a98-a477-3daad436904f" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getPendingCommissionPositionsByCommissionId>\r
+         <arg0>?</arg0>\r
+      </int:getPendingCommissionPositionsByCommissionId>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/CommissionServiceIntegration/getPendingCommissionPositionsByCommissionId"/></con:call></con:operation><con:operation id="b9555b5e-d574-4457-bbf1-9d7533e30abf" isOneWay="false" action="" name="getPendingCommissionsByPickerId" bindingOperationName="getPendingCommissionsByPickerId" type="Request-Response" outputName="getPendingCommissionsByPickerIdResponse" inputName="getPendingCommissionsByPickerId" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ebac8454-ad73-4081-8039-410ae11d752c" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getPendingCommissionsByPickerId>\r
+         <arg0>?</arg0>\r
+      </int:getPendingCommissionsByPickerId>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/CommissionServiceIntegration/getPendingCommissionsByPickerId"/></con:call></con:operation><con:operation id="a1ea5763-d09f-42db-a9d1-8e5cb01cb9fe" isOneWay="false" action="" name="getPendingCommissionsWithoutPicker" bindingOperationName="getPendingCommissionsWithoutPicker" type="Request-Response" outputName="getPendingCommissionsWithoutPickerResponse" inputName="getPendingCommissionsWithoutPicker" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1db837e7-da98-4cc5-83b2-bd12e75bdb9b" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getPendingCommissionsWithoutPicker/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/CommissionServiceIntegration/getPendingCommissionsWithoutPicker"/></con:call></con:operation><con:operation id="91665dec-6964-46be-bdcf-9406889c06b4" isOneWay="false" action="" name="updateFinishOfCommission" bindingOperationName="updateFinishOfCommission" type="Request-Response" outputName="updateFinishOfCommissionResponse" inputName="updateFinishOfCommission" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="54abe7c0-12e9-4056-8af7-a328e0cde659" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updateFinishOfCommission>\r
+         <arg0>?</arg0>\r
+      </int:updateFinishOfCommission>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/CommissionServiceIntegration/updateFinishOfCommission"/></con:call></con:operation><con:operation id="2adea87c-60fb-4315-ade6-ea4675c57e8f" isOneWay="false" action="" name="updatePickedQuantity" bindingOperationName="updatePickedQuantity" type="Request-Response" outputName="updatePickedQuantityResponse" inputName="updatePickedQuantity" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1740ffad-b461-47af-8492-9a34cbbd6c57" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updatePickedQuantity>\r
+         <arg0>?</arg0>\r
+         <arg1>?</arg1>\r
+      </int:updatePickedQuantity>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/CommissionServiceIntegration/updatePickedQuantity"/></con:call></con:operation><con:operation id="0e10aca6-2f97-4478-8640-d015bef28ffe" isOneWay="false" action="" name="updateStartOfCommission" bindingOperationName="updateStartOfCommission" type="Request-Response" outputName="updateStartOfCommissionResponse" inputName="updateStartOfCommission" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="618835af-2715-47ff-b6f3-c5ffc2642078" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updateStartOfCommission>\r
+         <arg0>?</arg0>\r
+      </int:updateStartOfCommission>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://integration.warehouse.de/CommissionServiceIntegration/updateStartOfCommission"/></con:call></con:operation></con:interface><con:testSuite id="6442b2bd-796f-4a8d-b8e6-a1bd66a46487" name="ArticleManagmentService Test Suite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="92394633-c55a-44f4-8c1d-1bfd5cb45ede" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getArticles TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="1be1565f-cdd7-4129-ba16-8552dd8106cb" name="getArticles"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArticleManagementIntegrationServiceSoapBinding</con:interface><con:operation>getArticles</con:operation><con:request name="getArticles" id="7cbfece3-4ea0-46c0-8655-26dc68154bba"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getArticles>\r
+         <arg0>?</arg0>\r
+      </int:getArticles>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/ArticleManagementIntegration/getArticles"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="3bba637b-a868-42f7-b69e-d2ecf63880c9" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="updateQuantityOnStockOfArticle TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="b7eb46c5-42f3-45cd-8d26-a5b6bdd7a583" name="updateQuantityOnStockOfArticle"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArticleManagementIntegrationServiceSoapBinding</con:interface><con:operation>updateQuantityOnStockOfArticle</con:operation><con:request name="updateQuantityOnStockOfArticle" id="a38b8381-4e5a-4e06-9441-daaad81f3d7a"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updateQuantityOnStockOfArticle>\r
+         <!--Optional:-->\r
+         <arg0>?</arg0>\r
+         <arg1>?</arg1>\r
+      </int:updateQuantityOnStockOfArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/ArticleManagementIntegration/updateQuantityOnStockOfArticle"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="121afe61-77de-4c7f-bfe4-5ee16866479d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="updateStorageLocationOfArticle TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="727e46e6-fe99-4909-8c87-0fead5497b47" name="updateStorageLocationOfArticle"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ArticleManagementIntegrationServiceSoapBinding</con:interface><con:operation>updateStorageLocationOfArticle</con:operation><con:request name="updateStorageLocationOfArticle" id="4e3a78e0-9bf1-4d8d-ae0d-1034a27066d0"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/ArticleManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updateStorageLocationOfArticle>\r
+         <!--Optional:-->\r
+         <arg0>?</arg0>\r
+         <!--Optional:-->\r
+         <arg1>?</arg1>\r
+      </int:updateStorageLocationOfArticle>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/ArticleManagementIntegration/updateStorageLocationOfArticle"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="c93f6f7e-515c-4d47-8a3d-c713f5364db4" name="SessionManagementService Test Suite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="231d66ed-763b-4528-bf0c-809e9e9c5266" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="login TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="8914f4d8-4dc2-4128-adb8-f24d79f2b887" name="login"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionManagementIntegrationServiceSoapBinding</con:interface><con:operation>login</con:operation><con:request name="login" id="f348bd22-50c1-496f-8b39-034b88f2855f"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:login>\r
+         <arg0>?</arg0>\r
+         <!--Optional:-->\r
+         <arg1>?</arg1>\r
+      </int:login>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/SessionManagementIntegration/login"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="426c379e-f53a-4017-a001-5672f5a5f6fb" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="logout TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="d0000c7c-0ba6-4c57-b9f7-4798f7dfb5be" name="logout"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>SessionManagementIntegrationServiceSoapBinding</con:interface><con:operation>logout</con:operation><con:request name="logout" id="a9869687-056b-4fb5-a9f5-cdcb9b1705e4"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/SessionManagementIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:logout>\r
+         <arg0>?</arg0>\r
+      </int:logout>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/SessionManagementIntegration/logout"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite id="cd46877d-9385-467a-914b-374ce83f6fbe" name="CommissionService Test Suite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="553bf62e-038b-499e-bd2b-5192733ab8a3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="allocateCommission TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="178e3132-2705-4475-9125-e7b1679fbf13" name="allocateCommission"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CommissionServiceIntegrationServiceSoapBinding</con:interface><con:operation>allocateCommission</con:operation><con:request name="allocateCommission" id="b13e1793-0657-40ec-a69e-0e0e060a6373"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:allocateCommission>\r
+         <arg0>?</arg0>\r
+         <arg1>?</arg1>\r
+      </int:allocateCommission>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/CommissionServiceIntegration/allocateCommission"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="9a219639-13a3-4016-ab9f-cb8af058b3d1" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="commitCommissionMessage TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="04332d82-90be-4d64-8de6-c0c239ab9cc9" name="commitCommissionMessage"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CommissionServiceIntegrationServiceSoapBinding</con:interface><con:operation>commitCommissionMessage</con:operation><con:request name="commitCommissionMessage" id="b9323d27-cff4-40bd-b2ff-4b5388721313"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:commitCommissionMessage>\r
+         <arg0>?</arg0>\r
+         <arg1>?</arg1>\r
+         <arg2>?</arg2>\r
+         <!--Optional:-->\r
+         <arg3>?</arg3>\r
+      </int:commitCommissionMessage>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/CommissionServiceIntegration/commitCommissionMessage"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="5b792fda-74f2-4c71-8b10-77b70005023f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getPendingCommissionPositionsByCommissionId TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="e87622cf-07c3-4d9f-aaa7-366135869df2" name="getPendingCommissionPositionsByCommissionId"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CommissionServiceIntegrationServiceSoapBinding</con:interface><con:operation>getPendingCommissionPositionsByCommissionId</con:operation><con:request name="getPendingCommissionPositionsByCommissionId" id="788d4598-7aff-4910-a650-07e39c9c6761"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getPendingCommissionPositionsByCommissionId>\r
+         <arg0>?</arg0>\r
+      </int:getPendingCommissionPositionsByCommissionId>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/CommissionServiceIntegration/getPendingCommissionPositionsByCommissionId"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="db0856cb-5e8c-4804-accb-44e9db7e0461" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getPendingCommissionsByPickerId TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4242df35-ef5e-40e7-b4b9-53b665ee791c" name="getPendingCommissionsByPickerId"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CommissionServiceIntegrationServiceSoapBinding</con:interface><con:operation>getPendingCommissionsByPickerId</con:operation><con:request name="getPendingCommissionsByPickerId" id="6bf96807-f1f0-4fb9-accd-0bf03d690774"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getPendingCommissionsByPickerId>\r
+         <arg0>?</arg0>\r
+      </int:getPendingCommissionsByPickerId>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/CommissionServiceIntegration/getPendingCommissionsByPickerId"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="967facc1-2170-44bf-9700-a3462fd83dbd" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getPendingCommissionsWithoutPicker TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="a1d7c168-ce03-4d18-8ebd-fd79cc142271" name="getPendingCommissionsWithoutPicker"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CommissionServiceIntegrationServiceSoapBinding</con:interface><con:operation>getPendingCommissionsWithoutPicker</con:operation><con:request name="getPendingCommissionsWithoutPicker" id="486940e5-3894-4040-a3c0-66363c0a63ba"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getPendingCommissionsWithoutPicker/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/CommissionServiceIntegration/getPendingCommissionsWithoutPicker"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="1e5b8e92-8095-4cc2-9ea1-85e6fb685932" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="updateFinishOfCommission TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="ec63a94d-7e58-44cf-801b-f0b627923500" name="updateFinishOfCommission"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CommissionServiceIntegrationServiceSoapBinding</con:interface><con:operation>updateFinishOfCommission</con:operation><con:request name="updateFinishOfCommission" id="b17ff1f8-e703-4b60-82a3-de684b00c616"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updateFinishOfCommission>\r
+         <arg0>?</arg0>\r
+      </int:updateFinishOfCommission>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/CommissionServiceIntegration/updateFinishOfCommission"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="5779c76b-1653-4446-b9c7-bc2871acec27" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="updatePickedQuantity TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="4ba35f40-5c7d-4b4a-8acf-2a2a35bf9119" name="updatePickedQuantity"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CommissionServiceIntegrationServiceSoapBinding</con:interface><con:operation>updatePickedQuantity</con:operation><con:request name="updatePickedQuantity" id="529a3150-6f71-4535-bcf1-01e8aa59d916"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updatePickedQuantity>\r
+         <arg0>?</arg0>\r
+         <arg1>?</arg1>\r
+      </int:updatePickedQuantity>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/CommissionServiceIntegration/updatePickedQuantity"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="20fb245a-8a0b-42e9-9b73-066a306a4790" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="updateStartOfCommission TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="463fde9b-d6dd-4606-b04b-def2d9d5e42e" name="updateStartOfCommission"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CommissionServiceIntegrationServiceSoapBinding</con:interface><con:operation>updateStartOfCommission</con:operation><con:request name="updateStartOfCommission" id="02631b51-3104-4e87-b362-c7c0989ee2af"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/WarehouseService-ejb-1.0.0/CommissionServiceIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://integration.warehouse.de/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:updateStartOfCommission>\r
+         <arg0>?</arg0>\r
+      </int:updateStartOfCommission>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="http://integration.warehouse.de/CommissionServiceIntegration/updateStartOfCommission"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

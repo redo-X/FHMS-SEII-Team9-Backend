@@ -69,7 +69,7 @@ public class CommissionDAO implements ICommissionDAO {
 	@Override
 	public List<CustomerOrder> getPendingCustomerOrders() {
 		logger.info("INVOKE: getPendingCustomerOrders");
-		
+	
 		return this.em.createQuery(
 				"SELECT e FROM " + CustomerOrder.class.getSimpleName() + " e WHERE e.commissionProgress < 1",
 				CustomerOrder.class).getResultList();

@@ -15,29 +15,40 @@ public interface IArticleRepository {
 	/**
 	 * @see de.warehouse.dao.interfaces.IArticleDAO#findById(String)
 	 */
-	public Article findById(String code);
+	public Article findById(int sessionId, String code) throws SessionExpiredException, AccessDeniedException;
+
 	/**
 	 * @see de.warehouse.dao.interfaces.IArticleDAO#getAll()
 	 */
 	public List<Article> getAll(int sessionId) throws SessionExpiredException, AccessDeniedException;
+
 	/**
 	 * @see de.warehouse.dao.interfaces.IArticleDAO#create(Article)
 	 */
-	public Article create(Article article) throws EntityWithIdentifierAlreadyExistsException;
+	public Article create(int sessionId, Article article)
+			throws SessionExpiredException, AccessDeniedException, EntityWithIdentifierAlreadyExistsException;
+
 	/**
 	 * @see de.warehouse.dao.interfaces.IArticleDAO#update(Article)
 	 */
-	public Article update(Article article);
+	public Article update(int sessionId, Article article) throws SessionExpiredException, AccessDeniedException;
+
 	/**
-	 * @see de.warehouse.dao.interfaces.IArticleDAO#updateStorageLocationOfArticle(String, String)
+	 * @see de.warehouse.dao.interfaces.IArticleDAO#updateStorageLocationOfArticle(String,
+	 *      String)
 	 */
-	public void updateStorageLocationOfArticle(String articleCode, String storageLocationCode) throws EntityNotFoundException;
+	public void updateStorageLocationOfArticle(int sessionId, String articleCode, String storageLocationCode)
+			throws SessionExpiredException, AccessDeniedException, EntityNotFoundException;
+
 	/**
-	 * @see de.warehouse.dao.interfaces.IArticleDAO#updateQuantityOnStockOfArticle(String, int)
+	 * @see de.warehouse.dao.interfaces.IArticleDAO#updateQuantityOnStockOfArticle(String,
+	 *      int)
 	 */
-	public void updateQuantityOnStockOfArticle(String articleCode, int receiptQuantity) throws EntityNotFoundException;
+	public void updateQuantityOnStockOfArticle(int sessionId, String articleCode, int receiptQuantity)
+			throws SessionExpiredException, AccessDeniedException, EntityNotFoundException;
+
 	/**
 	 * @see de.warehouse.dao.interfaces.IArticleDAO#delete(Article)
 	 */
-	public void remove(Article article);
+	public void remove(int sessionId, Article article) throws SessionExpiredException, AccessDeniedException;
 }

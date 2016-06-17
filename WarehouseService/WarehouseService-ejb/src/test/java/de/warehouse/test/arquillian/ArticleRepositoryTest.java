@@ -20,6 +20,8 @@ import de.warehouse.test.ArquillianTestWithSessionsBase;
 
 /**
  * @author Florian
+ * @see http://stackoverflow.com/questions/1836364/bad-form-for-junit-test-to-
+ *      throw-exception
  */
 @RunWith(Arquillian.class)
 public class ArticleRepositoryTest extends ArquillianTestWithSessionsBase {
@@ -45,7 +47,11 @@ public class ArticleRepositoryTest extends ArquillianTestWithSessionsBase {
 		a.setQuantityOnStock(10);
 		a.setQuantityOnCommitment(0);
 
-		this.articleRepository.create(a);
+		try {
+			this.articleRepository.create(super.sessionIdOfAdministrator, a);
+		} catch (SessionExpiredException | AccessDeniedException e) {
+			fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -70,12 +76,12 @@ public class ArticleRepositoryTest extends ArquillianTestWithSessionsBase {
 		a.setQuantityOnCommitment(0);
 
 		try {
-			a = this.articleRepository.create(a);
-		} catch (EntityWithIdentifierAlreadyExistsException e) {
+			a = this.articleRepository.create(super.sessionIdOfAdministrator, a);
+
+			assertNotEquals(null, this.articleRepository.findById(super.sessionIdOfAdministrator, a.getCode()));
+		} catch (EntityWithIdentifierAlreadyExistsException | SessionExpiredException | AccessDeniedException e) {
 			fail(e.getMessage());
 		}
-
-		assertNotEquals(null, this.articleRepository.findById(a.getCode()));
 	}
 
 	@Test
@@ -100,33 +106,43 @@ public class ArticleRepositoryTest extends ArquillianTestWithSessionsBase {
 		testArticle.setQuantityOnCommitment(0);
 
 		try {
-			testArticle = this.articleRepository.create(testArticle);
-		} catch (EntityWithIdentifierAlreadyExistsException e) {
+			testArticle = this.articleRepository.create(super.sessionIdOfAdministrator, testArticle);
+
+			assertNotEquals(null,
+					this.articleRepository.findById(super.sessionIdOfAdministrator, testArticle.getCode()));
+		} catch (EntityWithIdentifierAlreadyExistsException | SessionExpiredException | AccessDeniedException e) {
 			fail(e.getMessage());
 		}
-
-		assertNotEquals(null, this.articleRepository.findById(testArticle.getCode()));
 	}
 
 	@Test
 	@InSequence(5)
 	public void testUpdateArticleForTestSequence() {
-		Article testArticle = this.articleRepository.findById("T9999");
+		try {
+			Article testArticle = this.articleRepository.findById(super.sessionIdOfAdministrator, "T9999");
 
-		testArticle.setName("Test 123");
+			testArticle.setName("Test 123");
 
-		this.articleRepository.update(testArticle);
+			this.articleRepository.update(super.sessionIdOfAdministrator, testArticle);
 
-		assertEquals("Test 123", this.articleRepository.findById("T9999").getName());
+			assertEquals("Test 123",
+					this.articleRepository.findById(super.sessionIdOfAdministrator, "T9999").getName());
+		} catch (SessionExpiredException | AccessDeniedException e) {
+			fail(e.getMessage());
+		}
 	}
 
 	@Test
 	@InSequence(6)
 	public void testDeleteArticleForTestSequence() {
-		Article testArticle = this.articleRepository.findById("T9999");
+		try {
+			Article testArticle = this.articleRepository.findById(super.sessionIdOfAdministrator, "T9999");
 
-		this.articleRepository.remove(testArticle);
-
-		assertEquals(null, this.articleRepository.findById("T9999"));
+			this.articleRepository.remove(super.sessionIdOfAdministrator, testArticle);
+			
+			assertEquals(null, this.articleRepository.findById(super.sessionIdOfAdministrator, "T9999"));
+		} catch (SessionExpiredException | AccessDeniedException e) {
+			fail(e.getMessage());
+		}		
 	}
 }

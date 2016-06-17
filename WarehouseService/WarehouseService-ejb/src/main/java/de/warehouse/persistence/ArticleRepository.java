@@ -17,6 +17,7 @@ import de.warehouse.shared.interfaces.IArticleRepository;
 import de.warehouse.shared.interfaces.ISessionManagement;
 
 /**
+ * @author David, Florian
  * @see de.warehouse.shared.interfaces.IArticleRepository
  */
 @Stateless
@@ -24,7 +25,7 @@ public class ArticleRepository implements IArticleRepository {
 
 	@EJB
 	private ISessionManagement sessionManagement;
-	
+
 	@EJB
 	private IArticleDAO articleDAO;
 
@@ -32,7 +33,9 @@ public class ArticleRepository implements IArticleRepository {
 	 * @see de.warehouse.shared.interfaces.IArticleRepository#findById(java.lang.Integer)
 	 */
 	@Override
-	public Article findById(String code) {
+	public Article findById(int sessionId, String code) throws SessionExpiredException, AccessDeniedException {
+		this.sessionManagement.ensureAuthorization(Role.Lagerist, sessionId);
+
 		return this.articleDAO.findById(code);
 	}
 
@@ -50,7 +53,10 @@ public class ArticleRepository implements IArticleRepository {
 	 * @see de.warehouse.shared.interfaces.IArticleRepository#create(de.warehouse.persistence.Article)
 	 */
 	@Override
-	public Article create(Article article) throws EntityWithIdentifierAlreadyExistsException {
+	public Article create(int sessionId, Article article)
+			throws SessionExpiredException, AccessDeniedException, EntityWithIdentifierAlreadyExistsException {
+		this.sessionManagement.ensureAuthorization(Role.Lagerist, sessionId);
+
 		return this.articleDAO.create(article);
 	}
 
@@ -58,23 +64,33 @@ public class ArticleRepository implements IArticleRepository {
 	 * @see de.warehouse.shared.interfaces.IArticleRepository#update(de.warehouse.persistence.Article)
 	 */
 	@Override
-	public Article update(Article article) {
+	public Article update(int sessionId, Article article) throws SessionExpiredException, AccessDeniedException {
+		this.sessionManagement.ensureAuthorization(Role.Lagerist, sessionId);
+
 		return this.articleDAO.update(article);
 	}
 
 	/**
-	 * @see de.warehouse.shared.interfaces.IArticleRepository#updateStorageLocationOfArticle(java.lang.String, java.lang.String)
+	 * @see de.warehouse.shared.interfaces.IArticleRepository#updateStorageLocationOfArticle(java.lang.String,
+	 *      java.lang.String)
 	 */
 	@Override
-	public void updateStorageLocationOfArticle(String articleCode, String storageLocationCode) throws EntityNotFoundException {
+	public void updateStorageLocationOfArticle(int sessionId, String articleCode, String storageLocationCode)
+			throws SessionExpiredException, AccessDeniedException, EntityNotFoundException {
+		this.sessionManagement.ensureAuthorization(Role.Lagerist, sessionId);
+
 		this.articleDAO.updateStorageLocationOfArticle(articleCode, storageLocationCode);
 	}
 
 	/**
-	 * @see de.warehouse.shared.interfaces.IArticleRepository#updateQuantityOnStockOfArticle(java.lang.String, java.lang.String)
+	 * @see de.warehouse.shared.interfaces.IArticleRepository#updateQuantityOnStockOfArticle(java.lang.String,
+	 *      java.lang.String)
 	 */
 	@Override
-	public void updateQuantityOnStockOfArticle(String articleCode, int receiptQuantity) throws EntityNotFoundException {
+	public void updateQuantityOnStockOfArticle(int sessionId, String articleCode, int receiptQuantity)
+			throws SessionExpiredException, AccessDeniedException, EntityNotFoundException {
+		this.sessionManagement.ensureAuthorization(Role.Lagerist, sessionId);
+
 		this.articleDAO.updateQuantityOnStockOfArticle(articleCode, receiptQuantity);
 	}
 
@@ -82,7 +98,9 @@ public class ArticleRepository implements IArticleRepository {
 	 * @see de.warehouse.shared.interfaces.IArticleRepository#remove(de.warehouse.persistence.Article)
 	 */
 	@Override
-	public void remove(Article article) {
+	public void remove(int sessionId, Article article) throws SessionExpiredException, AccessDeniedException {
+		this.sessionManagement.ensureAuthorization(Role.Lagerist, sessionId);
+
 		this.articleDAO.delete(article);
 	}
 }

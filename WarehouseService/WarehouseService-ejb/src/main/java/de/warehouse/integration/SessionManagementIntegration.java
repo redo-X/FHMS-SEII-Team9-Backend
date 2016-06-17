@@ -42,8 +42,8 @@ public class SessionManagementIntegration {
 			response.setResultCode(-2);
 			response.setResultMessage(ex.getMessage());
 		}catch(Exception ex) {
-			response.setResultCode(-3);
-			response.setResultMessage(ex.getMessage());
+			response.setResultCode(-1000);
+			response.setResultMessage("Unknown error.");
 		}
 		
 		return response;
@@ -55,8 +55,8 @@ public class SessionManagementIntegration {
 			this.sessionManagement.closeSession(sessionId);
 		}
 		catch (Exception ex){
-			response.setResultCode(-1);
-			response.setResultMessage(ex.getMessage());
+			response.setResultCode(-1000);
+			response.setResultMessage("Unknown error.");
 		}
 		
 		return response;

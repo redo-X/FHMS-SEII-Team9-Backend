@@ -8,6 +8,8 @@ public class SessionExpiredException extends RemoteException {
 	 * 
 	 */
 	private static final long serialVersionUID = 7456097254280414753L;
+	
+	public static final int ERROR_CODE = 400;
 
 
 	public SessionExpiredException() {

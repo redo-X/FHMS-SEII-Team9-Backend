@@ -67,7 +67,11 @@ public class EmployeeRepositoryTest extends ArquillianTestWithSessionsBase {
 		e.setPassword("geheim");
 		e.setRole(Role.Kommissionierer);
 
-		e = this.employeeRepository.create(e);
+		try {
+			e = this.employeeRepository.create(super.sessionIdOfAdministrator, e);
+		} catch (SessionExpiredException | AccessDeniedException e1) {
+			fail(e1.getMessage());
+		}
 
 		e = this.employeeRepository.findById(e.getCode());
 		
@@ -82,7 +86,11 @@ public class EmployeeRepositoryTest extends ArquillianTestWithSessionsBase {
 		e.setFirstName("Jane");
 		e.setMailAddress("jane.doe@isp.de");
 		
-		e = this.employeeRepository.update(e);
+		try {
+			e = this.employeeRepository.update(super.sessionIdOfAdministrator, e);
+		} catch (SessionExpiredException | AccessDeniedException e1) {
+			fail(e1.getMessage());
+		}
 		
 		assertNotNull(e);
 		
@@ -99,7 +107,11 @@ public class EmployeeRepositoryTest extends ArquillianTestWithSessionsBase {
 		
 		assertNotNull(e);
 		
-		this.employeeRepository.delete(e);
+		try {
+			this.employeeRepository.delete(super.sessionIdOfAdministrator, e);
+		} catch (SessionExpiredException | AccessDeniedException e1) {
+			fail(e1.getMessage());
+		}
 		
 		assertNull(this.employeeRepository.findById(VALID_EMPLOYEE_ID_FOR_DELETE));
 	}

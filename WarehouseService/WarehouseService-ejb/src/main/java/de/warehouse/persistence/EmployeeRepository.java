@@ -20,7 +20,7 @@ public class EmployeeRepository implements IEmployeeRepository {
 
 	@EJB
 	private ISessionManagement sessionManagementBean;
-	
+
 	@EJB
 	private IEmployeeDAO employeeDAO;
 
@@ -32,6 +32,7 @@ public class EmployeeRepository implements IEmployeeRepository {
 	public Employee findById(Integer code) {
 		return this.employeeDAO.findById(code);
 	}
+
 	/**
 	 * @see de.warehouse.shared.interfaces.IEmployeeRepository#getAll(int)
 	 */
@@ -39,31 +40,40 @@ public class EmployeeRepository implements IEmployeeRepository {
 	@Lock(LockType.READ)
 	public List<Employee> getAll(int sessionId) throws AccessDeniedException, SessionExpiredException {
 		this.sessionManagementBean.ensureAuthorization(Role.Administrator, sessionId);
-		
+
 		return this.employeeDAO.getAll();
 	}
+
 	/**
 	 * @see de.warehouse.shared.interfaces.IEmployeeRepository#create(Employee)
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public Employee create(Employee employee) {
+	public Employee create(int sessionId, Employee employee) throws AccessDeniedException, SessionExpiredException {
+		this.sessionManagementBean.ensureAuthorization(Role.Administrator, sessionId);
+
 		return this.employeeDAO.create(employee);
 	}
+
 	/**
 	 * @see de.warehouse.shared.interfaces.IEmployeeRepository#update(Employee)
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public Employee update(Employee employee) {
+	public Employee update(int sessionId, Employee employee) throws AccessDeniedException, SessionExpiredException {
+		this.sessionManagementBean.ensureAuthorization(Role.Administrator, sessionId);
+
 		return this.employeeDAO.update(employee);
 	}
+
 	/**
 	 * @see de.warehouse.shared.interfaces.IEmployeeRepository#delete(Employee)
 	 */
 	@Override
 	@Lock(LockType.WRITE)
-	public void delete(Employee employee) {
+	public void delete(int sessionId, Employee employee) throws AccessDeniedException, SessionExpiredException {
+		this.sessionManagementBean.ensureAuthorization(Role.Administrator, sessionId);
+
 		this.employeeDAO.delete(employee);
 	}
 }
