@@ -21,6 +21,7 @@ import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyFinishedExce
 import de.warehouse.shared.exceptions.CustomerOrderCommissionAlreadyStartedException;
 import de.warehouse.shared.exceptions.CustomerOrderMustBeAllocateToPicker;
 import de.warehouse.shared.exceptions.CustomerOrderNotCompletelyCommissioned;
+import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 import de.warehouse.test.ArquillianTestWithSessionsBase;
@@ -61,7 +62,7 @@ public class CommissionDAOTest extends ArquillianTestWithSessionsBase {
 
 	@Test
 	public void testGetPendingCustomerOrdersWithoutPicker() {
-		assertEquals(2, this.commissionDAO.getPendingCustomerOrdersWithoutPicker().size(), 0);
+		assertEquals(0, this.commissionDAO.getPendingCustomerOrdersWithoutPicker().size(), 0);
 	}
 
 	@Test
@@ -101,7 +102,11 @@ public class CommissionDAOTest extends ArquillianTestWithSessionsBase {
 
 	@Test(expected=CustomerOrderAlreadyAllocatedException.class)
 	public void testAllocateCustomerOrderWithAllocatedCustomerOrder() throws CustomerOrderAlreadyAllocatedException{
-		this.commissionDAO.allocateCustomerOrder(VALID_CUSTOMER_ORDER_ID, VALID_PICKER_2_ID);
+		try {
+			this.commissionDAO.allocateCustomerOrder(VALID_CUSTOMER_ORDER_ID, VALID_PICKER_2_ID);
+		} catch (EntityNotFoundException e) {
+			fail(e.getMessage());
+		}
 	}
 	@Test(expected=CustomerOrderMustBeAllocateToPicker.class)
 	public void testUpdateStartWithUnallocatedCustomerOrder() throws CustomerOrderMustBeAllocateToPicker {
@@ -125,7 +130,7 @@ public class CommissionDAOTest extends ArquillianTestWithSessionsBase {
 	public void testAllocateCustomerOrder() {
 		try {
 			this.commissionDAO.allocateCustomerOrder(VALID_CUSTOMER_ORDER_ID_WITHOUT_PICKER, VALID_PICKER_2_ID);
-		} catch (CustomerOrderAlreadyAllocatedException e) {
+		} catch (CustomerOrderAlreadyAllocatedException | EntityNotFoundException e) {
 			fail(e.getMessage());
 		}
 	}

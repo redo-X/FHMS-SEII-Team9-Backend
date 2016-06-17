@@ -50,7 +50,7 @@ public class EmployeeRepositoryTest extends ArquillianTestWithSessionsBase {
 	public void testGetAllAfterDatabaseInit() {
 		try {
 			Integer numberOfEmployees = this.employeeRepository.getAll(super.sessionIdOfAdministrator).size();
-			assertEquals("There must be 4 employees after database init in the database.", 4, numberOfEmployees, 0);
+			assertEquals("There must be 5 employees after database init in the database.", 5, numberOfEmployees, 0);
 		} catch (SessionExpiredException | AccessDeniedException e) {
 			fail(e.getMessage());
 		}

@@ -135,6 +135,13 @@ public class CustomerOrderTests {
 		assertEquals(1, this.orderWithPositions.getCommissionProgress(), 0);
 	}
 
+	@Test
+	public void testGetPendingPositionCount() {
+		int pendingPosCount = this.orderWithPositions.getPendingPositionCount();
+
+		assertEquals(2, pendingPosCount, 0);
+	}
+	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetNegativeCommissionProgress() {
 		this.orderWithPositions.setCommissionProgress(-1);

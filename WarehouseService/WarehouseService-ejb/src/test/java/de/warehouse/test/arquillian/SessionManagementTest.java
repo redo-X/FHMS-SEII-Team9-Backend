@@ -40,7 +40,7 @@ public class SessionManagementTest extends ArquillianTestBase {
 	@Test
 	@InSequence(2)
 	public void testFindCreatedSession() {
-		WarehouseSession session = this.sessionManagementDummy.getById(11);
+		WarehouseSession session = this.sessionManagementDummy.getById(12);
 
 		assertNotEquals(null, session);
 	}
@@ -49,7 +49,7 @@ public class SessionManagementTest extends ArquillianTestBase {
 	@InSequence(3)
 	public void testEnsureAuthorizationPositive() {
 		try {
-			this.sessionManagementDummy.ensureAuthorization(Role.Kommissionierer, 11);
+			this.sessionManagementDummy.ensureAuthorization(Role.Kommissionierer, 12);
 		} catch (SessionExpiredException | AccessDeniedException e) {
 			fail(e.getMessage());
 		}
@@ -59,7 +59,7 @@ public class SessionManagementTest extends ArquillianTestBase {
 	@InSequence(4)
 	public void testEnsureAuthorizationOnLageristSecuredMethod() throws AccessDeniedException {
 		try {
-			this.sessionManagementDummy.ensureAuthorization(Role.Lagerist, 11);
+			this.sessionManagementDummy.ensureAuthorization(Role.Lagerist, 12);
 		} catch (SessionExpiredException e) {
 			fail(e.getMessage());
 		}
@@ -69,7 +69,7 @@ public class SessionManagementTest extends ArquillianTestBase {
 	@InSequence(5)
 	public void testEnsureAuthorizationOnAdministratorSecuredMethod() throws AccessDeniedException {
 		try {
-			this.sessionManagementDummy.ensureAuthorization(Role.Administrator, 11);
+			this.sessionManagementDummy.ensureAuthorization(Role.Administrator, 12);
 		} catch (SessionExpiredException e) {
 			fail(e.getMessage());
 		}
@@ -78,14 +78,14 @@ public class SessionManagementTest extends ArquillianTestBase {
 	@Test
 	@InSequence(10)
 	public void testLogout() {
-		this.sessionManagementDummy.closeSession(11);
+		this.sessionManagementDummy.closeSession(12);
 	}
 
 	@Test(expected = SessionExpiredException.class)
 	@InSequence(11)
 	public void testEnsureAuthorizationWithExpiredSession() throws SessionExpiredException {
 		try {
-			this.sessionManagementDummy.ensureAuthorization(Role.Administrator, 11);
+			this.sessionManagementDummy.ensureAuthorization(Role.Administrator, 12);
 		} catch (AccessDeniedException e) {
 			fail(e.getMessage());
 		}
