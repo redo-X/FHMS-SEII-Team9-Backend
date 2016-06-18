@@ -18,6 +18,9 @@ import de.warehouse.persistence.CustomerOrderPositionMessage;
 import de.warehouse.persistence.Employee;
 import de.warehouse.shared.DocTypes;
 
+/**
+ * @author David
+ */
 @Singleton
 @Startup
 public class MessageEmployeesGeneratorBean {

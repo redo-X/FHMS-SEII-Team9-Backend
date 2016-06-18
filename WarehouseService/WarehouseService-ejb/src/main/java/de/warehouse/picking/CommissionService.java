@@ -29,6 +29,9 @@ import de.warehouse.shared.exceptions.SessionExpiredException;
 import de.warehouse.shared.interfaces.ICommissionService;
 import de.warehouse.shared.interfaces.ISessionManagement;
 
+/**
+ * @author David
+ */
 @Stateless
 @Remote(ICommissionService.class)
 public class CommissionService implements ICommissionService {

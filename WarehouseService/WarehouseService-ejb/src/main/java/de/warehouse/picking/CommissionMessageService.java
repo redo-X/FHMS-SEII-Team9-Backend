@@ -17,6 +17,9 @@ import de.warehouse.persistence.Employee;
 import de.warehouse.persistence.Role;
 import de.warehouse.shared.interfaces.ICommissionMessages;
 
+/**
+ * @author David
+ */
 @Stateless
 @Local(ICommissionMessages.class)
 public class CommissionMessageService implements ICommissionMessages {

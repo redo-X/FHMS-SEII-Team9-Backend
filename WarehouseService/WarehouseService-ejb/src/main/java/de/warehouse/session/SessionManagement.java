@@ -16,6 +16,7 @@ import de.warehouse.shared.interfaces.ISessionManagement;
 
 /**
  * Session Bean implementation class SessionManagement
+ * @author David, Florian, Thomas, Marco
  */
 @Singleton
 @Remote(ISessionManagement.class)

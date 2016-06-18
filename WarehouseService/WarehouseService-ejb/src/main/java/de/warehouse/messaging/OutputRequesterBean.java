@@ -13,6 +13,9 @@ import org.jboss.logging.Logger;
 
 import de.warehouse.picking.CommissionService;
 
+/**
+ * @author David
+ */
 @Stateless
 @LocalBean
 public class OutputRequesterBean {
