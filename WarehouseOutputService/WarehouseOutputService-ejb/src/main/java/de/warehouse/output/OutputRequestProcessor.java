@@ -19,7 +19,7 @@ import de.warehouse.shared.interfaces.IMailService;
 public class OutputRequestProcessor implements MessageListener {
 
 	private static final Logger logger = Logger.getLogger(OutputRequestProcessor.class);
-	
+
 	@EJB
 	private IMailService mailService;
 
@@ -29,16 +29,18 @@ public class OutputRequestProcessor implements MessageListener {
 	public void onMessage(Message message) {
 		try {
 			MapMessage msg = (MapMessage) message;
-		
-			
+
 			String recipient = msg.getString("Recipient");
 			String subject = msg.getString("Subject");
 			String body = msg.getString("Body");
-			
+
 			this.mailService.send(recipient, subject, body);
-			
+
 			logger.info("Received message from java:/jms/queue/Queue1: " + body);
 		} catch (JMSException e) {
+			logger.error(e.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 	}
 
