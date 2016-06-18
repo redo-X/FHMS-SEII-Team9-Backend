@@ -7,7 +7,7 @@ public abstract class ResponseBase extends DataTransferObjectBase {
 	public static final Integer OK_CODE = 0;
 	
 	private Integer resultCode = OK_CODE;
-	private String resultMessage;
+	private String resultMessage = "";
 	/**
 	 * @return the resultCode
 	 */

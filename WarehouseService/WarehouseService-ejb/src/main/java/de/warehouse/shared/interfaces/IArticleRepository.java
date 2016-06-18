@@ -27,6 +27,22 @@ public interface IArticleRepository {
 	 */
 	public Article create(int sessionId, Article article)
 			throws SessionExpiredException, AccessDeniedException, EntityWithIdentifierAlreadyExistsException;
+	
+	/**
+	 * Creates an article.
+	 * @author Florian 
+	 * @param sessionId
+	 * @param code
+	 * @param name
+	 * @param storageLocation 
+	 * @return Instance of article with generated primary key value
+	 * @throws SessionExpiredException if youre session expired
+	 * @throws AccessDeniedException if you are not allowed to execute this method
+	 * @throws EntityWithIdentifierAlreadyExistsException if an article with the code already created
+	 * @throws EntityNotFoundException if StorageLocation not found
+	 */
+	public Article create(int sessionId, String code, String name, String storageLocation)
+			throws SessionExpiredException, AccessDeniedException, EntityWithIdentifierAlreadyExistsException, EntityNotFoundException;
 
 	/**
 	 * @see de.warehouse.dao.interfaces.IArticleDAO#update(Article)

@@ -7,12 +7,14 @@ import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 import de.warehouse.dto.IDataTransferObjectAssembler;
+import de.warehouse.dto.responses.article.CreateArticleResponse;
 import de.warehouse.dto.responses.article.GetArticlesResponse;
 import de.warehouse.dto.responses.article.UpdateQuantityOnStockOfArticleResponse;
 import de.warehouse.dto.responses.article.UpdateStorageLocationOfArticleResponse;
 import de.warehouse.persistence.Article;
 import de.warehouse.shared.exceptions.AccessDeniedException;
 import de.warehouse.shared.exceptions.EntityNotFoundException;
+import de.warehouse.shared.exceptions.EntityWithIdentifierAlreadyExistsException;
 import de.warehouse.shared.exceptions.SessionExpiredException;
 import de.warehouse.shared.interfaces.IArticleRepository;
 
@@ -100,6 +102,41 @@ public class ArticleManagementIntegration {
 			List<Article> articles = this.articleRepository.getAll(sessionId);
 
 			response.setArticles(this.dtoAssembler.mapEntities(articles.toArray(new Article[articles.size()])));
+		} catch (SessionExpiredException e) {
+			response.setResultCode(SessionExpiredException.ERROR_CODE);
+			response.setResultMessage(e.getMessage());
+		} catch (AccessDeniedException e) {
+			response.setResultCode(AccessDeniedException.ERROR_CODE);
+			response.setResultMessage(e.getMessage());
+		}
+
+		return response;
+	}
+
+	/**
+	 * Creates a new article
+	 * 
+	 * @author Florian
+	 * @param sessionId
+	 *            to identify the employee
+	 * @param code
+	 *            to identify the article
+	 * @param name
+	 *            user friendly name of article
+	 * @param storageLocation
+	 *            location to stock the article
+	 */
+	public CreateArticleResponse createArticle(int sessionId, String code, String name, String storageLocation) {
+		CreateArticleResponse response = new CreateArticleResponse();
+
+		try {
+			this.articleRepository.create(sessionId, code, name, storageLocation);
+		} catch (EntityWithIdentifierAlreadyExistsException e) {
+			response.setResultCode(-1);
+			response.setResultMessage(e.getMessage());
+		} catch (EntityNotFoundException e) {
+			response.setResultCode(-2);
+			response.setResultMessage(e.getMessage());
 		} catch (SessionExpiredException e) {
 			response.setResultCode(SessionExpiredException.ERROR_CODE);
 			response.setResultMessage(e.getMessage());

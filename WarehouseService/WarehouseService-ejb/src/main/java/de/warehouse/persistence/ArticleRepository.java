@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import de.warehouse.dao.interfaces.IArticleDAO;
+import de.warehouse.dao.interfaces.IStorageLocationDAO;
 import de.warehouse.shared.exceptions.AccessDeniedException;
 import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.EntityWithIdentifierAlreadyExistsException;
@@ -28,6 +29,9 @@ public class ArticleRepository implements IArticleRepository {
 
 	@EJB
 	private IArticleDAO articleDAO;
+
+	@EJB
+	private IStorageLocationDAO storageLocationDAO;
 
 	/**
 	 * @see de.warehouse.shared.interfaces.IArticleRepository#findById(java.lang.Integer)
@@ -55,8 +59,32 @@ public class ArticleRepository implements IArticleRepository {
 	@Override
 	public Article create(int sessionId, Article article)
 			throws SessionExpiredException, AccessDeniedException, EntityWithIdentifierAlreadyExistsException {
-		this.sessionManagement.ensureAuthorization(Role.Lagerist, sessionId);
+		this.sessionManagement.ensureAuthorization(Role.Administrator, sessionId);
 
+		return this.articleDAO.create(article);
+	}
+
+	/**
+	 * @see de.warehouse.shared.interfaces.IArticleRepository#create(int,
+	 *      java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Article create(int sessionId, String code, String name, String storageLocation)
+			throws SessionExpiredException, AccessDeniedException, EntityWithIdentifierAlreadyExistsException, EntityNotFoundException {
+		this.sessionManagement.ensureAuthorization(Role.Administrator, sessionId);
+
+		StorageLocation sl = this.storageLocationDAO.findById(storageLocation);
+
+		if (sl == null) {
+			throw new EntityNotFoundException("StorageLocation with id " + storageLocation + " not found.");
+		}
+
+		Article article = new Article(code, name);
+		
+		article.setStorageLocation(sl);
+		article.setQuantityOnCommitment(0);
+		article.setQuantityOnStock(0);
+		
 		return this.articleDAO.create(article);
 	}
 
@@ -99,7 +127,7 @@ public class ArticleRepository implements IArticleRepository {
 	 */
 	@Override
 	public void remove(int sessionId, Article article) throws SessionExpiredException, AccessDeniedException {
-		this.sessionManagement.ensureAuthorization(Role.Lagerist, sessionId);
+		this.sessionManagement.ensureAuthorization(Role.Administrator, sessionId);
 
 		this.articleDAO.delete(article);
 	}
