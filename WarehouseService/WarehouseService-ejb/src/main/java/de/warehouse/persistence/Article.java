@@ -135,7 +135,8 @@ public class Article implements Serializable{
 	 * @throws IllegalArgumentException If the commitment quantity is greater than the quantity on stock
 	 */
 	public void setQuantityOnCommitment(Integer quantityOnCommitment) throws IllegalArgumentException {
-		if (quantityOnCommitment > this.quantityOnStock) {
+		if (quantityOnCommitment != null && this.quantityOnStock != null 
+				&& quantityOnCommitment > this.quantityOnStock) {
 			throw new IllegalArgumentException("The quantity to commit must be less or equals the quantity on stock.");
 		}
 		
