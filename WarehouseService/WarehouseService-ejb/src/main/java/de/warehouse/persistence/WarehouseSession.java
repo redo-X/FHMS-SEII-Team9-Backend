@@ -13,7 +13,7 @@ public class WarehouseSession implements Serializable {
 	@Id 
 	@GeneratedValue
 	private int id;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Employee employee;
 	private Date creationTime;
 	
