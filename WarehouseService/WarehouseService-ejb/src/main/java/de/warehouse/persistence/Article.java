@@ -15,8 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
- * @author David
- *
+ * @author David, Florian
  */
 @Entity
 public class Article implements Serializable{
@@ -61,13 +60,6 @@ public class Article implements Serializable{
 	public Integer getFreeQuantity() {
 		return this.quantityOnStock - this.quantityOnCommitment;
 	}
-
-	@Override
-	public String toString() {
-		return "Article [code=" + code + ", name=" + name + ", storageLocation=" + storageLocation
-				+ ", quantityOnStock=" + quantityOnStock + ", quantityOnCommitment=" + quantityOnCommitment + "]";
-	}
-
 	
 	/**
 	 * @return the code
@@ -150,4 +142,12 @@ public class Article implements Serializable{
 	public String getDisplayName() {
 		return String.format("%s: %s", this.code, this.name);
 	}
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Article [code=" + code + ", name=" + name + ", storageLocation=" + storageLocation
+				+ ", quantityOnStock=" + quantityOnStock + ", quantityOnCommitment=" + quantityOnCommitment + "]";
+	}	
 }

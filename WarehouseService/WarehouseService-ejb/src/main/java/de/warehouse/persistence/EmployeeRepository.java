@@ -14,6 +14,10 @@ import de.warehouse.shared.exceptions.SessionExpiredException;
 import de.warehouse.shared.interfaces.IEmployeeRepository;
 import de.warehouse.shared.interfaces.ISessionManagement;
 
+
+/**
+ * @author David
+ */
 @Stateless
 @Remote(IEmployeeRepository.class)
 public class EmployeeRepository implements IEmployeeRepository {

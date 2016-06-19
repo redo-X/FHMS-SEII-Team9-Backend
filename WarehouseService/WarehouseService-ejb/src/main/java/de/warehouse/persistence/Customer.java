@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * @author David, Florian
+ */
 @Entity
 public class Customer implements Serializable {
 
@@ -119,4 +122,12 @@ public class Customer implements Serializable {
 		this.deliveryToleranceInDays = deliveryToleranceInDays;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Customer [code=" + code + ", name1=" + name1 + ", name2=" + name2 + ", mailAddress=" + mailAddress
+				+ ", deliveryToleranceInDays=" + deliveryToleranceInDays + "]";
+	}
 }

@@ -13,6 +13,7 @@ import de.warehouse.persistence.Employee;
 import de.warehouse.persistence.Role;
 
 /**
+ * @author David
  * @see de.warehouse.dao.interfaces.IEmployeeDAO
  */
 @Stateless

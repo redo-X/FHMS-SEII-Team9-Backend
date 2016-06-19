@@ -20,9 +20,9 @@ import de.warehouse.shared.exceptions.CustomerOrderMustBeAllocateToPicker;
 import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 
+
 /**
- * @author David
- *
+ * @author David, Florian
  */
 @Entity
 public class CustomerOrderPosition implements Serializable {

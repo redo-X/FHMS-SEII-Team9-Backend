@@ -15,7 +15,6 @@ import de.warehouse.shared.utils.DateUtil;
 
 /**
  * @author David
- *
  */
 public class CustomerOrderTests {
 

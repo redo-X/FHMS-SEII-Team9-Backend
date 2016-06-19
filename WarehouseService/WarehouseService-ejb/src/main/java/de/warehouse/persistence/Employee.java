@@ -12,9 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+
 /**
- * @author David
- *
+ * @author David, Florian
  */
 @Entity
 public class Employee implements Serializable {
@@ -140,8 +140,12 @@ public class Employee implements Serializable {
 		this.role = role;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Employee [code=" + code + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "Employee [code=" + code + ", password=" + password + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", mailAddress=" + mailAddress + ", role=" + role + "]";
 	}
 }

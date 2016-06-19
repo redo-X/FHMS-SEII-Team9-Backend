@@ -5,6 +5,9 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+/**
+ * @author David, Florian
+ */
 @Entity
 public class WarehouseSession implements Serializable {
 
@@ -48,6 +51,11 @@ public class WarehouseSession implements Serializable {
 	public Date getCreationTime() {
 		return creationTime;
 	}
-	
-	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "WarehouseSession [id=" + id + ", employee=" + employee + ", creationTime=" + creationTime + "]";
+	}
 }

@@ -17,6 +17,7 @@ import de.warehouse.shared.interfaces.ISessionManagement;
 /**
  * Session Bean implementation class SessionManagement
  * @author David, Florian, Thomas, Marco
+ * @see de.warehouse.shared.interfaces.ISessionManagement
  */
 @Singleton
 @Remote(ISessionManagement.class)
@@ -25,16 +26,24 @@ public class SessionManagement implements ISessionManagement {
 	@EJB
 	private IWarehouseSessionDAO warehouseSessionDAO;
 
+	/**
+	 * @see de.warehouse.shared.interfaces.ISessionManagement#createSession(Integer, String)
+	 */
 	@Override
 	public int createSession(Integer code, String password) throws EntityNotFoundException, UsernamePasswordMismatchException {
 		return this.warehouseSessionDAO.create(code, password);
 	}
-
+	/**
+	 * @see de.warehouse.shared.interfaces.ISessionManagement#getById(int)
+	 */
 	@Override
 	public WarehouseSession getById(int warehouseSessionId) {
 		return this.warehouseSessionDAO.findById(warehouseSessionId);
 	}
 
+	/**
+	 * @see de.warehouse.shared.interfaces.ISessionManagement#ensureAuthorization(Role, int)
+	 */
 	@Override
 	public void ensureAuthorization(Role requiredLevel, int warehouseSessionId) throws SessionExpiredException, AccessDeniedException {
 		WarehouseSession session = this.getById(warehouseSessionId);
@@ -57,7 +66,9 @@ public class SessionManagement implements ISessionManagement {
 
 		throw new AccessDeniedException();
 	}
-
+	/**
+	 * @see de.warehouse.shared.interfaces.ISessionManagement#closeSession(int)
+	 */
 	@Override
 	public void closeSession(int warehouseSessionId) {
 		this.warehouseSessionDAO.delete(warehouseSessionId);

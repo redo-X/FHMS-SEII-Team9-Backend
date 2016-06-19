@@ -13,6 +13,9 @@ import de.warehouse.dao.interfaces.ICommissionMessagesDAO;
 import de.warehouse.shared.interfaces.ICommissionMessages;
 import de.warehouse.test.ArquillianTestWithSessionsBase;
 
+/**
+ * @author David
+ */
 @RunWith(Arquillian.class)
 public class CommissionMessageServiceTest extends ArquillianTestWithSessionsBase {
 

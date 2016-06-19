@@ -20,6 +20,8 @@ import de.warehouse.shared.DocTypes;
 
 /**
  * @author David
+ * This Bean checks regularly for pending messages and delegates pending messages to the OutputRequesterBean.
+ * Pending Message = Message which was not been sent via email
  */
 @Singleton
 @Startup

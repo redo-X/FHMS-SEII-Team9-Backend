@@ -24,9 +24,7 @@ import de.warehouse.test.ArquillianTestWithSessionsBase;
 
 /**
  * This test must test the authorization and authentication of the employees.
- * 
  * @author Florian
- *
  */
 @RunWith(Arquillian.class)
 public class CommissionServiceTest extends ArquillianTestWithSessionsBase {

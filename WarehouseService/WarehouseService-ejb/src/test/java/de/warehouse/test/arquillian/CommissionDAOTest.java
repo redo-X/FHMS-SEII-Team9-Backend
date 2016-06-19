@@ -26,6 +26,9 @@ import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 import de.warehouse.test.ArquillianTestWithSessionsBase;
 
+/**
+ * @author David
+ */
 @RunWith(Arquillian.class)
 public class CommissionDAOTest extends ArquillianTestWithSessionsBase {
 

@@ -13,7 +13,6 @@ import de.warehouse.shared.utils.DateUtil;
 
 /**
  * @author David, Florian
- *
  */
 public class DateUtilTests {
 

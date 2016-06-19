@@ -15,7 +15,6 @@ import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 
 /**
  * @author Florian
- *
  */
 public class CustomerOrderPositionTests {
 

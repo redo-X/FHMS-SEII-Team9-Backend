@@ -12,9 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+
 /**
- * @author David
- *
+ * @author David, Florian
  */
 @Entity
 public class StorageLocation implements Serializable{
@@ -39,12 +39,6 @@ public class StorageLocation implements Serializable{
 		this.code = code;
 	}
 	
-	
-
-	@Override
-	public String toString() {
-		return "StorageLocation [code=" + code + "]";
-	}
 	/**
 	 * @return the code
 	 */
@@ -57,5 +51,11 @@ public class StorageLocation implements Serializable{
 	public Set<Article> getStockArticles() {
 		return stockArticles;
 	}
-	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StorageLocation [code=" + code + "]";
+	}	
 }

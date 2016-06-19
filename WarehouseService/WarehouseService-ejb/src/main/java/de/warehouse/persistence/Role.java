@@ -5,7 +5,6 @@ package de.warehouse.persistence;
 
 /**
  * @author David
- *
  */
 public enum Role {
 	Kommissionierer(0),

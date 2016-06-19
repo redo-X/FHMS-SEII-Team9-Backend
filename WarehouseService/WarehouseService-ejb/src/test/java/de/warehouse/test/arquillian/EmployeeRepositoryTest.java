@@ -19,6 +19,9 @@ import de.warehouse.shared.exceptions.SessionExpiredException;
 import de.warehouse.shared.interfaces.IEmployeeRepository;
 import de.warehouse.test.ArquillianTestWithSessionsBase;
 
+/**
+ * @author David
+ */
 @RunWith(Arquillian.class)
 public class EmployeeRepositoryTest extends ArquillianTestWithSessionsBase {
 

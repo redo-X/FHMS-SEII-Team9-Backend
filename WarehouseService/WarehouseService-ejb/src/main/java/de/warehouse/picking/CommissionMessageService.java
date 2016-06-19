@@ -19,6 +19,7 @@ import de.warehouse.shared.interfaces.ICommissionMessages;
 
 /**
  * @author David
+ * @see de.warehouse.shared.interfaces.ICommissionMessages
  */
 @Stateless
 @Local(ICommissionMessages.class)
@@ -36,8 +37,7 @@ public class CommissionMessageService implements ICommissionMessages {
 	private OutputRequesterBean requesterBean;
 
 	/** 
-	 * @see
-	 * de.warehouse.shared.interfaces.ICommissionMessages#commitMessage(int, int, int, int, java.lang.String)
+	 * @see de.warehouse.shared.interfaces.ICommissionMessages#commitMessage(int, int, int, int, java.lang.String)
 	 */
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -45,6 +45,7 @@ public class CommissionMessageService implements ICommissionMessages {
 	public void commitMessage(int sessionId, int customerOrderPositionId, int differenceQuantity, String note) {
 		logger.info(String.format("INVOKE: %s(%d, %d, %d, %s)", "commitMessage", sessionId, customerOrderPositionId, differenceQuantity, note));
 		
+		// Propagate the message to all employees of the role 'Lagerist' because these employees are able responsible in the first step
 		for(Employee e : this.employeeDAO.getByRole(Role.Lagerist)) {
 			this.commissionMessageDAO.commitMessage(sessionId, customerOrderPositionId, e.getCode(), differenceQuantity, note);
 		}

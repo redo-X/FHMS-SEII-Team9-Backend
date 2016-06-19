@@ -11,6 +11,11 @@ import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.UsernamePasswordMismatchException;
 import de.warehouse.shared.interfaces.ISessionManagement;
 
+/**
+ * This class expand the superclass with logins of all role types.
+ * @author David
+ * @see de.warehouse.test.ArquillianTestBase
+ */
 public abstract class ArquillianTestWithSessionsBase extends ArquillianTestBase {
 	
 	@EJB

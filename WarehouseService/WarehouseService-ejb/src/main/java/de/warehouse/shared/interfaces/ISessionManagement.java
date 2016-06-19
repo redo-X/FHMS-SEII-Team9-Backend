@@ -21,10 +21,11 @@ public interface ISessionManagement {
 	public WarehouseSession getById(int warehouseSessionId);
 	/**
 	 * Ensures authentication and authorization based on the sessionId and claimed Role
+	 * @author David
 	 * @param requiredLevel Role that the employee has to be related to
 	 * @param warehouseSessionId current Context
-	 * @throws SessionExpiredException if employee logged out
-	 * @throws AccessDeniedException if employee has not the permission to execute the method
+	 * @throws SessionExpiredException if the session not exists anymore
+	 * @throws AccessDeniedException if the user of the given sessionId has insufficient rights
 	 */
 	public void ensureAuthorization(Role requiredLevel, int warehouseSessionId) throws SessionExpiredException, AccessDeniedException;
 	/**

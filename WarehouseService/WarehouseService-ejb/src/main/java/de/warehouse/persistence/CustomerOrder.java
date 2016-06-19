@@ -22,9 +22,9 @@ import javax.persistence.OneToMany;
 import de.warehouse.shared.exceptions.CustomerOrderAlreadyAllocatedException;
 import de.warehouse.shared.utils.DateUtil;
 
+
 /**
- * @author David
- *
+ * @author David, Florian
  */
 @Entity
 public class CustomerOrder implements Serializable {

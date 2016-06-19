@@ -23,6 +23,10 @@ import de.warehouse.persistence.CustomerOrderPositionMessage;
 import de.warehouse.persistence.Employee;
 import de.warehouse.persistence.WarehouseSession;
 
+/**
+ * David
+ * @see de.warehouse.dao.interfaces.ICommissionMessagesDAO
+ */
 @Stateless
 public class CommissionMessagesDAO implements ICommissionMessagesDAO {
 	

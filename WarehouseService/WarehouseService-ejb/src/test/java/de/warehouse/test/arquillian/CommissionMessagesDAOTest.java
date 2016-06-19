@@ -15,6 +15,9 @@ import de.warehouse.dao.interfaces.ICommissionMessagesDAO;
 import de.warehouse.persistence.CustomerOrderPositionMessage;
 import de.warehouse.test.ArquillianTestWithSessionsBase;
 
+/**
+ * @author David
+ */
 @RunWith(Arquillian.class)
 @Transactional
 public class CommissionMessagesDAOTest extends ArquillianTestWithSessionsBase {

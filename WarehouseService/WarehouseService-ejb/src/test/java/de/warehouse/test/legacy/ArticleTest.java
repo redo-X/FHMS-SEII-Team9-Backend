@@ -8,7 +8,6 @@ import de.warehouse.persistence.Article;
 
 /**
  * @author Florian
- *
  */
 public class ArticleTest {
 	

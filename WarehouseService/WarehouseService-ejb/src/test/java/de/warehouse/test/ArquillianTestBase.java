@@ -4,6 +4,11 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
+/**
+ * Base class for arquillian test.
+ * This class defines the deployment of the application.
+ * @author David
+ */
 public abstract class ArquillianTestBase {
 	@Deployment
 	public static WebArchive createDeployment() {

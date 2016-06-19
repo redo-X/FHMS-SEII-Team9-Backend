@@ -12,9 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+
 /**
- * @author David
- *
+ * @author David, Florian
  */
 @Entity
 public class CustomerOrderPositionMessage implements Serializable {
@@ -136,5 +136,16 @@ public class CustomerOrderPositionMessage implements Serializable {
 	 */
 	public void setEmailSent(boolean isEmailSent) {
 		this.isEmailSent = isEmailSent;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CustomerOrderPositionMessage [customerOrderPositionMessageId=" + customerOrderPositionMessageId
+				+ ", position=" + position + ", note=" + note + ", quantityDifference=" + quantityDifference
+				+ ", isEmailSent=" + isEmailSent + ", createdByEmployee=" + createdByEmployee + ", responsibleEmployee="
+				+ responsibleEmployee + "]";
 	}
 }

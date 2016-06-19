@@ -15,6 +15,7 @@ import de.warehouse.shared.exceptions.EntityNotFoundException;
 import de.warehouse.shared.exceptions.UsernamePasswordMismatchException;
 
 /**
+ * @author Florian, David
  * @see de.warehouse.dao.interfaces.IWarehouseSessionDAO
  */
 @Stateless

@@ -15,6 +15,7 @@ import de.warehouse.picking.CommissionService;
 
 /**
  * @author David
+ * This Bean receives and pushes the incoming messages to the e-mail delivery queue.
  */
 @Stateless
 @LocalBean
@@ -28,6 +29,13 @@ public class OutputRequesterBean {
 	@Resource(lookup = "java:/jms/queue/Queue1")
 	private Queue queue;
 
+	/**
+	 * This method send a message to the e-mail pipeline/queue.
+	 * @param docType Filter criteria for message driven bean
+	 * @param recipient Recipient for the mail
+	 * @param subject User friendly Subject
+	 * @param body Mail Body
+	 */
 	public void sendInfo(String docType, String recipient, String subject, String body) {
 		try (JMSContext context = connectionFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE)) {
 			MapMessage message = context.createMapMessage();

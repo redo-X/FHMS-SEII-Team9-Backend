@@ -28,6 +28,7 @@ import de.warehouse.shared.exceptions.NegativeQuantityException;
 import de.warehouse.shared.exceptions.PickedQuantityTooHighException;
 
 /**
+ * David
  * @see de.warehouse.dao.interfaces.ICommissionDAO
  */
 @Stateless
